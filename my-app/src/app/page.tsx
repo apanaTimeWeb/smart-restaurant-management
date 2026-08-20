@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // RESPONSIBILITY: Public City Marketplace & Multi-Tenant SaaS Landing Portal (`/`).
 // Allows customers to browse, search, and discover top restaurants by city & cuisine,
@@ -33,7 +33,7 @@ import {
 import { initializeLocalStorageSeeds } from "@/lib/localStorageSeeder";
 import { getStoredTenants, getActiveTenants } from "@/lib/tenantService";
 import type { AppTenant, UserRole } from "@/types/appTypes";
-import { HomeRoleAccessPanel } from "@/app/dashboard/dashboard_components/HomeRoleAccessPanel";
+import { HomeRoleAccessPanel } from "@/app/customer/customer_home_components/HomeRoleAccessPanel";
 import { PublicNavbar } from "@/components/PublicNavbar/PublicNavbar";
 import { PublicFooter } from "@/components/PublicFooter/PublicFooter";
 
@@ -99,7 +99,7 @@ export default function SaaSMarketplaceLandingPage(): React.JSX.Element {
     <div className="min-h-screen w-full bg-page text-text-primary flex flex-col">
       <PublicNavbar />
 
-      {/* ── Hero Search & Discovery Banner ───────────────────────────────────── */}
+      {/* â”€â”€ Hero Search & Discovery Banner â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="relative overflow-hidden bg-gradient-to-b from-primary/10 via-page to-page py-12 px-4 sm:px-6 lg:py-16">
         <div className="mx-auto max-w-5xl text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 text-xs font-extrabold text-amber-500 mb-4 shadow-xs">
@@ -143,7 +143,7 @@ export default function SaaSMarketplaceLandingPage(): React.JSX.Element {
                 type="search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search restaurant name, landmark, biryani, dim sums…"
+                placeholder="Search restaurant name, landmark, biryani, dim sumsâ€¦"
                 className="w-full bg-transparent text-xs sm:text-sm text-text-primary placeholder:text-text-muted focus:outline-none"
               />
             </div>
@@ -171,7 +171,7 @@ export default function SaaSMarketplaceLandingPage(): React.JSX.Element {
         </div>
       </section>
 
-      {/* ── Featured Restaurants Grid Section ─────────────────────────────────── */}
+      {/* â”€â”€ Featured Restaurants Grid Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 py-8">
         <div className="flex items-center justify-between mb-6">
           <div>
@@ -213,7 +213,7 @@ export default function SaaSMarketplaceLandingPage(): React.JSX.Element {
                 className="group relative flex flex-col justify-between rounded-2xl border border-border/80 bg-card overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-2xl"
               >
                 {/* Banner & Badge (Clickable to Details Page) */}
-                <Link href={`/hotel/${tenant.tenantId}`} className="relative h-44 w-full bg-surface overflow-hidden block">
+                <Link href={`/customer/hotel/${tenant.tenantId}`} className="relative h-44 w-full bg-surface overflow-hidden block">
                   <img
                     src={(tenant.galleryUrls && tenant.galleryUrls.length > 0) ? tenant.galleryUrls[0] : tenant.bannerUrl}
                     alt={tenant.restaurantName}
@@ -249,7 +249,7 @@ export default function SaaSMarketplaceLandingPage(): React.JSX.Element {
                   {/* Address & Cuisines */}
                   <div className="flex flex-col gap-1.5">
                     <p className="text-xs text-text-muted line-clamp-1">
-                      📍 {tenant.address}
+                      ðŸ“ {tenant.address}
                     </p>
                     <div className="flex items-center gap-1.5 flex-wrap">
                       {tenant.cuisineTypes.map((c) => (
@@ -261,7 +261,7 @@ export default function SaaSMarketplaceLandingPage(): React.JSX.Element {
                         </span>
                       ))}
                       <span className="ml-auto text-xs font-extrabold text-text-primary">
-                        ₹{tenant.costForTwo} for two
+                        â‚¹{tenant.costForTwo} for two
                       </span>
                     </div>
                   </div>
@@ -293,7 +293,7 @@ export default function SaaSMarketplaceLandingPage(): React.JSX.Element {
         )}
       </section>
 
-      {/* ── Partner With Us CTA Section ───────────────────────────────────────── */}
+      {/* â”€â”€ Partner With Us CTA Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 py-12">
         <div className="relative overflow-hidden rounded-3xl border border-primary/30 bg-gradient-to-r from-primary/20 via-surface to-amber-500/20 p-8 sm:p-12 shadow-2xl">
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
@@ -341,7 +341,7 @@ export default function SaaSMarketplaceLandingPage(): React.JSX.Element {
         </div>
       </section>
 
-      {/* ── Interactive 5 Role Operating POS Terminals Access Panel ─────────── */}
+      {/* â”€â”€ Interactive 5 Role Operating POS Terminals Access Panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <HomeRoleAccessPanel />
 
       <PublicFooter />

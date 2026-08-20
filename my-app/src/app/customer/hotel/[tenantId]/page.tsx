@@ -20,7 +20,7 @@ import {
 import { PublicNavbar } from "@/components/PublicNavbar/PublicNavbar";
 import { PublicFooter } from "@/components/PublicFooter/PublicFooter";
 
-export default function HotelDetailPage() {
+export default function CustomerHotelDetailPage() {
   const params = useParams();
   const router = useRouter();
   const tenantId = params.tenantId as string;

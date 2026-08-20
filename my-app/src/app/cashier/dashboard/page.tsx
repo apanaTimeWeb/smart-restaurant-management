@@ -103,7 +103,7 @@ function DashboardKpiCardSkeleton() {
 
 // ─── Main Page Component ──────────────────────────────────────────────────────
 
-export default function DashboardPage() {
+export default function CashierDashboardPage() {
   // isMounted guard — server aur first client render pe skeleton dikhao
   // Why: localStorage SSR pe available nahi — hydration mismatch rokne ke liye
   const [isMounted, setIsMounted] = useState(false);
@@ -201,7 +201,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <AuthGuard allowedRoles={["ADMIN", "CASHIER", "WAITER"]}>
+    <AuthGuard allowedRoles={["CASHIER"]}>
       <div className="flex flex-col gap-6">
         <DashboardPageHeader />
 
