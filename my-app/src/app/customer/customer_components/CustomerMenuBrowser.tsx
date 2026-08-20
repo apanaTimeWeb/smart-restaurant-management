@@ -7,6 +7,9 @@
 // DATA FLOW: customer/page.tsx -> CustomerMenuBrowser -> UI
 
 import React, { useState, useMemo, useEffect } from "react";
+import { ThemeToggle } from "@/components/Theme/ThemeToggle";
+import { useAuth } from "@/app/auth/auth_hooks/useAuth";
+import { useRouter } from "next/navigation";
 import {
   Search,
   Star,
@@ -22,6 +25,7 @@ import {
   ChevronLeft,
   Receipt,
   LayoutGrid,
+  LogOut,
 } from "lucide-react";
 import type { AppMenuItem } from "@/types/appTypes";
 import type {
@@ -208,6 +212,8 @@ export function CustomerMenuBrowser({
   onViewRunningOrder,
   onUpdateQty,
 }: CustomerMenuBrowserProps) {
+  const { logout } = useAuth();
+  const router = useRouter();
   const [search, setSearch] = useState<string>("");
   const [dietaryFilter, setDietaryFilter] = useState<CustomerDietaryFilter>("ALL");
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
@@ -274,19 +280,28 @@ export function CustomerMenuBrowser({
             </div>
           </div>
 
-          {/* Cart Icon trigger top-right */}
-          {cartQtyTotal > 0 && (
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
             <button
-              onClick={onOpenCart}
-              className="relative flex items-center gap-1.5 rounded-xl bg-emerald-500 px-3.5 py-2 text-xs font-extrabold text-white shadow-md hover:bg-emerald-600 active:scale-95 transition-all"
+              onClick={() => { logout(); router.push("/auth/login"); }}
+              className="flex h-9 w-9 items-center justify-center rounded-xl bg-danger/10 text-danger hover:bg-danger hover:text-white transition-colors"
             >
-              <ShoppingCart size={15} />
-              <span>Cart</span>
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-emerald-700 text-[11px] font-black">
-                {cartQtyTotal}
-              </span>
+              <LogOut size={16} />
             </button>
-          )}
+            {/* Cart Icon trigger top-right */}
+            {cartQtyTotal > 0 && (
+              <button
+                onClick={onOpenCart}
+                className="relative flex items-center gap-1.5 rounded-xl bg-emerald-500 px-3.5 h-9 text-xs font-extrabold text-white shadow-md hover:bg-emerald-600 active:scale-95 transition-all"
+              >
+                <ShoppingCart size={15} />
+                <span>Cart</span>
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-emerald-700 text-[11px] font-black">
+                  {cartQtyTotal}
+                </span>
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Active Running Order Notification Bar */}

@@ -7,6 +7,9 @@
 // DATA FLOW: order + menu → CustomerOrderStatus → createServiceRequest + CustomerBillRequestModal → UI
 
 import { useState, useMemo } from "react";
+import { ThemeToggle } from "@/components/Theme/ThemeToggle";
+import { useAuth } from "@/app/auth/auth_hooks/useAuth";
+import { useRouter } from "next/navigation";
 import {
   CheckCircle2,
   Clock,
@@ -19,6 +22,7 @@ import {
   ChevronRight,
   Flame,
   ChefHat,
+  LogOut,
 } from "lucide-react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { STORAGE_KEYS } from "@/lib/localStorageSeeder";
@@ -34,6 +38,8 @@ export function CustomerOrderStatus({
   tableNumber,
   onOrderMore,
 }: CustomerOrderStatusProps) {
+  const { logout } = useAuth();
+  const router = useRouter();
   const [menu] = useLocalStorage<AppMenuItem[]>(STORAGE_KEYS.MENU, []);
   const [isBillModalOpen, setIsBillModalOpen] = useState(false);
   const [serviceSuccessMsg, setServiceSuccessMsg] = useState<string | null>(null);
@@ -131,6 +137,27 @@ export function CustomerOrderStatus({
 
   return (
     <div className="flex flex-col gap-5 py-4 max-w-lg mx-auto pb-24 animate-in fade-in duration-300">
+      {/* Top Header & Restaurant Branding Bar */}
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary/15 text-primary border border-primary/30">
+            <UtensilsCrossed size={16} />
+          </div>
+          <h1 className="font-extrabold text-sm text-text-primary tracking-tight">
+            Royal Spice Bistro
+          </h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <button
+            onClick={() => { logout(); router.push("/auth/login"); }}
+            className="flex h-9 w-9 items-center justify-center rounded-xl bg-danger/10 text-danger hover:bg-danger hover:text-white transition-colors"
+          >
+            <LogOut size={16} />
+          </button>
+        </div>
+      </div>
+
       {/* Order Confirmed Hero Banner */}
       <div className="relative flex flex-col items-center justify-center gap-3 rounded-3xl border border-success/40 bg-gradient-to-b from-success/15 to-success/5 p-6 text-center shadow-lg overflow-hidden">
         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-success text-white shadow-xl ring-4 ring-success/20 animate-in zoom-in duration-300">
