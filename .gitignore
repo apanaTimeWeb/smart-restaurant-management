@@ -1,0 +1,37 @@
+# ─── AI Working & Planning Files (ignore karo — source code nahi hain) ────────
+cloud.txt
+
+
+
+# ─── Next.js Build Output ─────────────────────────────────────────────────────
+my-app/.next/
+my-app/out/
+my-app/dist/
+
+# ─── Dependencies ─────────────────────────────────────────────────────────────
+my-app/node_modules/
+
+# ─── Environment Variables ────────────────────────────────────────────────────
+my-app/.env
+my-app/.env.local
+my-app/.env*.local
+
+# ─── TypeScript Build Info ────────────────────────────────────────────────────
+my-app/*.tsbuildinfo
+my-app/next-env.d.ts
+
+# ─── OS Files ─────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── Editor ───────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+
+# ─── Kombai (design tool cache) ───────────────────────────────────────────────
+.kombai/
+
+# ─── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+npm-debug.log*

@@ -1,0 +1,473 @@
+Act as a Principal Frontend Architect & Lead UI/UX Engineer. Build a production-grade, multi-role "Smart Restaurant Management & POS System" using Next.js 16 (App Router, Turbopack), TypeScript, Tailwind CSS, and shadcn/ui components.
+
+===============================================================================
+PART 1: SMART LIBRARY 360 — GLOBAL DESIGN SYSTEM
+===============================================================================
+
+Stack: Next.js 16 (App Router, Turbopack) · TypeScript · Tailwind CSS · shadcn/ui components
+
+-------------------------------------------------------------------------------
+1. COLOR PALETTE
+-------------------------------------------------------------------------------
+*Note: The system defaults to Dark Mode. CSS variables must be defined in `globals.css` and mapped in `tailwind.config.ts`. Do NOT use hardcoded hex colors directly in JSX.*
+
+Core Colors:
+| Token | Dark Mode (Default) | Light Mode | Usage |
+|---|---|---|---|
+| `--primary` | `#6366F1` (Indigo-500) | `#4F46E5` | Primary buttons, active nav item, links |
+| `--primary-hover` | `#4F46E5` (Indigo-600) | `#4338CA` | Primary button hover state |
+| `--primary-subtle` | `#EEF2FF` (Indigo-50) | `#EEF2FF` | Soft badge backgrounds, selected row highlight |
+| `--bg-page` | `#0F0F1A` | `#F8FAFC` | Main page background |
+| `--bg-card` | `#1A1A2E` | `#FFFFFF` | Card, panel, table background |
+| `--bg-sidebar` | `#12121F` | `#F1F5F9` | Sidebar background |
+| `--bg-header` | `#16162A` | `#FFFFFF` | Top header background |
+| `--bg-input` | `#1E1E32` | `#FFFFFF` | Input field background |
+| `--border` | `#2A2A3E` | `#E2E8F0` | Card borders, table dividers, input borders |
+| `--border-focus` | `#6366F1` | `#4F46E5` | Input border on focus |
+| `--text-primary` | `#F0F0FF` | `#0F172A` | All primary text, headings, table values |
+| `--text-secondary` | `#94A3B8` (Slate-400) | `#64748B` | Labels, captions, placeholder text (improved contrast) |
+| `--text-disabled` | `#44445A` | `#94A3B8` | Disabled states |
+| `--skeleton-base` | `#2A2A3E` | `#E2E8F0` | Loading skeleton base color |
+| `--skeleton-highlight`| `#3F3F5A` | `#F1F5F9` | Loading skeleton shimmer highlight |
+
+Status Colors (Strictly for statuses):
+| Token | Text Color | Background Color | Usage |
+|---|---|---|---|
+| `--success` | `#34D399` (WCAG pass) | `#064E3B` | Active / Available / Present / Resolved / Paid |
+| `--warning` | `#FBBF24` (WCAG pass) | `#451A03` | Pending / Billing Pending / Expiring / Held |
+| `--danger` | `#F87171` (WCAG pass) | `#450A0A` | Occupied / Overdue / Out of Stock / Cancelled / Void |
+| `--info` | `#60A5FA` | `#1E3A5F` | New / Reserved / Neutral |
+
+Payment Mode Colors (Separated to avoid status collision):
+| Token | Text Color | Background Color | Usage |
+|---|---|---|---|
+| `--pay-cash` | `#5EEAD4` (Teal) | `#134E4A` | Cash payments |
+| `--pay-upi` | `#67E8F9` (Cyan) | `#164E63` | UPI payments |
+| `--pay-card` | `#94A3B8` (Slate)| `#1E293B` | Card payments |
+| `--pay-bank` | `#38BDF8` (Sky) | `#0C4A6E` | Bank Transfers |
+
+Border Radius Scale:
+| Token | Value | Usage |
+|---|---|---|
+| `--radius-sm` | `4px` | Small elements, checkboxes |
+| `--radius-md` | `8px` | Buttons, Inputs, standard elements |
+| `--radius-lg` | `12px` | Cards, Panels, standard containers |
+| `--radius-xl` | `16px` | Modals, large surface areas |
+| `--radius-full`| `999px` | Status badges, circular avatars |
+
+-------------------------------------------------------------------------------
+2. TYPOGRAPHY
+-------------------------------------------------------------------------------
+- Font Family: `Inter` — loaded via `next/font/google`: `import { Inter } from 'next/font/google'`
+- Base font-size: 14px
+
+| Role | Size | Weight | Color | Usage |
+|---|---|---|---|---|
+| Page Title (H1) | 22px | 700 Bold | `--text-primary` | One per page, top-left |
+| Section Heading (H2) | 16px | 600 SemiBold | `--text-primary` | Section titles inside cards |
+| Card Label | 11px | 500 Medium | `--text-secondary` | UPPERCASED stat card labels |
+| Stat Number | 28px | 700 Bold | `--text-primary` | Big KPI numbers on dashboard cards |
+| Table Header | 12px | 600 SemiBold | `--text-secondary` | UPPERCASED column headers |
+| Table Cell | 14px | 400 Normal | `--text-primary` | Row data values |
+| Button Text | 14px | 500 Medium | White / `--primary` | Primary / ghost buttons |
+| Input Text | 14px | 400 Normal | `--text-primary` | User-typed values |
+| Caption / Helper | 12px | 400 Normal | `--text-secondary` | Below inputs, footnotes |
+| Error Message | 12px | 400 Normal | `--danger` | Below invalid input fields |
+| Badge Text | 11px | 600 SemiBold | Varies | Status pill labels |
+
+-------------------------------------------------------------------------------
+3. APP SHELL LAYOUT
+-------------------------------------------------------------------------------
+Every authenticated page uses this shell. Auth pages do NOT use this shell.
+
+┌──────────────────────────────────────────────────────────────────┐
+│  TOP HEADER (height: 64px, position: fixed, top: 0, full-width)   │
+│  [☰ Collapse] [🍽️ Smart POS 360 Logo] ··· [🏢 Branch Name ▼] [🔔 Bell] [👤 Avatar ▼] │
+├────────────────┬─────────────────────────────────────────────────┤
+│  SIDEBAR       │  MAIN CONTENT AREA                              │
+│  width: 240px  │  margin-left: 240px                             │
+│  (collapsible  │  padding: 24px                                  │
+│   to 60px,     │  margin-top: 64px (below header)                │
+│   icon-only    │                                                 │
+│   mode on      │  [Breadcrumb: Dashboard > POS > Floor Captain]   │
+│   toggle)      │  [Page Title (H1) + subtitle]                   │
+│                │  [Action Bar: filters left + CTA buttons right] │
+│  position:     │  [Page Content: table / form / grid / charts]   │
+│  fixed, left:0 │                                                 │
+│  bg: --bg-sidebar                                                │
+│  border-right: │  *Note: Sidebar nav items scroll independently  │
+│  1px --border  │  (overflow-y-auto), header/toggle stay pinned.* │
+└────────────────┴─────────────────────────────────────────────────┘
+
+Sidebar Nav Groups & Items (in order):
+📊  Dashboard
+📈  Reports
+── Operations ───────────────
+🛎️  Waiter / Floor Captain
+👨‍🍳  Kitchen KDS Terminal
+💳  Cashier Billing POS
+📱  Customer QR View
+── Tables & Reservations ────
+🗺️  Floor Map
+🪑  Table Matrix
+📅  Advance Reservations
+── Inventory & Menu ─────────
+🍔  Menu & Item Master
+🧪  Recipe Ingredients
+📦  Stock Inventory
+⚠️  Waste Management
+⚡  Combos & Happy Hours
+── Finance & CRM ────────────
+💰  Collect Billing
+💳  Payment History
+🎁  Loyalty & CRM Customers
+🧾  Tax & Service Charges
+── Admin & System ───────────
+🏢  Branch Settings
+👥  Staff & Roles
+🔑  Permissions & Audit Logs
+⏱️  Shift & Day-Close (Z-Report)
+💾  Data Backup & Restore
+⚙️  Settings
+
+-------------------------------------------------------------------------------
+4. STATUS BADGE RULES (Universal — Apply to ALL pages)
+-------------------------------------------------------------------------------
+The status-to-color mapping MUST live in a single constants file: `src/config/statusBadgeConfig.ts`.
+Badges are pill-shaped: `border-radius: var(--radius-full)`, `padding: 2px 10px`, `font-size: 11px`, `font-weight: 600`.
+
+| Status Value | Text Color | Background | Icon |
+|---|---|---|---|
+| Available / Active / Present / Delivered / Resolved / Paid | `--success text` | `--success bg` | CheckCircle |
+| Pending / Billing Pending / Expiring / In-Progress / Held / Late | `--warning text` | `--warning bg` | AlertTriangle |
+| Occupied / Suspended / Failed / Low Stock / Overdue / Out of Stock / Void | `--danger text` | `--danger bg` | XCircle |
+| Inactive / Expired / Cancelled | `--text-secondary` | `#1E1E2E` | MinusCircle |
+| New / Reserved / Order Received | `--info text` | `--info bg` | Info |
+
+-------------------------------------------------------------------------------
+5. REUSABLE COMPONENT PATTERNS
+-------------------------------------------------------------------------------
+5a. KPI / Stat Card: Size 200–260px wide, ~120px high. Top-left icon + label (UPPERCASE 11px `--text-secondary`), Big number (28px bold `--text-primary`), Trend line ("↑ 12% vs last month" green / "↓ 3%" red). Background `--bg-card`, border `1px solid --border`, radius `var(--radius-lg)`.
+5b. Data Table: Header row `rgba(99,102,241,0.08)`, UPPERCASE 12px `--text-secondary`. Data rows alternating zebra stripe, 48px row height. Row hover `rgba(99,102,241,0.06)`. Inline row actions (Edit ✏️, Delete 🗑️) on hover. Row click opens detail drawer. Pagination bar below. Centered empty state if no rows.
+5c. Form Layout: Simple (≤6 fields) single column max-width 560px. Complex (>6 fields) two-column grid inside full-width card. Label above → Input below → Helper/Error below. Required fields marked with red asterisk `*`.
+5d. Modal / Dialog: Overlay `backdrop: rgba(0,0,0,0.6)` at `z-40`. Modal card `var(--bg-card)`, radius `var(--radius-xl)`, padding 28px, max-width 480px. Title 18px bold + Content + Footer buttons.
+5e. Visual Grid (Table / Seat Matrix): CSS Grid auto-fill. Cell 64x64px, rounded `var(--radius-md)`, status colored. Hover scales up (1.05) with tooltip popover. Click free cell -> action; click occupied cell -> order profile.
+5f. Kanban Board: Horizontal scrollable columns container. Column header with status badge + count. Cards stacked vertically inside `--bg-card` with left border matching status color.
+5g. Wizard / Stepper: Left panel vertical step list 01-05. Right panel current step form. Top progress bar 0-100%. Footer Back (ghost) | Next (primary).
+5h. Timeline: Vertical 2px line (`--border`). Colored dots on line + date + content card. Newest on top.
+5i. Command Palette (Ctrl+K): Overlay `backdrop: rgba(0,0,0,0.6)` at `z-40`. Centered top-aligned card with large search input `🔍 Search or jump to...`. Results grouped by category with keyboard arrow navigation.
+5j. Confirmation Drawer: Slide-in from right, 480px wide, full height for complex confirmations. Footer Cancel (ghost) | Confirm (danger/primary).
+5k. Inline Editable Cell Pattern: Click text to replace with input field (`--border-focus` ring). Save on Blur/Enter, Cancel on Escape. Small spinner when saving.
+
+-------------------------------------------------------------------------------
+6. FEEDBACK & STATE PATTERNS
+-------------------------------------------------------------------------------
+- Toast Notifications: Bottom-right fixed (`z-50`), 320px wide, radius `var(--radius-lg)`. Success green left border, Error red left border. Auto-dismiss in 4 seconds.
+- Loading State: Skeleton loaders (`--skeleton-base` and `--skeleton-highlight`) matching page layout.
+- Empty State: Centered SVG illustration + "No [items] found" (16px `--text-secondary`) + optional CTA button.
+- Form Validation: Validate on submit + blur. Error: red border (`--danger`) + text below (12px `--danger`).
+- Confirmation Dialogs: REQUIRED for Delete, Mark Void, Bill Cancel, Reset Data, Close Shift, Process Refund.
+
+-------------------------------------------------------------------------------
+7. BUTTON HIERARCHY RULES
+-------------------------------------------------------------------------------
+- Primary: Solid `--primary`, white text, radius `var(--radius-md)`, 10px 20px padding.
+- Danger Primary: Solid `--danger`, off-white text.
+- Ghost / Outlined: Transparent bg, `--border` border, `--text-primary` text.
+- Ghost Danger: Transparent bg, `--danger` border, `--danger` text.
+- Icon Button: 32x32px square/circle, inline row action.
+- Text Link: `--primary` text, underline on hover.
+- Segmented Control: Joined button group, selected = `--primary`.
+- Placement: Page CTA top-right; Form submit bottom-right; Destructive paired with Cancel ghost to its left.
+
+-------------------------------------------------------------------------------
+8. RESPONSIVE BEHAVIOR
+-------------------------------------------------------------------------------
+- Desktop (≥1280px): Full sidebar (240px), full table columns.
+- Tablet (768-1279px): Sidebar collapses to icon-only (60px). Tables scroll horizontally.
+- Mobile (<768px): Sidebar hidden (hamburger drawer). Tables collapse to stacked cards. Forms single column.
+
+-------------------------------------------------------------------------------
+9. ICONS
+-------------------------------------------------------------------------------
+Use official Lucide React components exclusively (`lucide-react`). NEVER raw emojis in JSX.
+
+-------------------------------------------------------------------------------
+10. CHART STYLE GUIDE
+-------------------------------------------------------------------------------
+Canonical library: ApexCharts (`react-apexcharts`).
+- Grouped Bar Chart: Income `#6366F1` (Indigo) vs Expense `#EF4444` (Red).
+- Line Chart: Line `#10B981` (Green) with area fill `rgba(16,185,129,0.15)`.
+- Donut / Pie Chart: Indigo, Emerald, Amber, Blue, Purple, Red.
+- Horizontal Bar: Single `#6366F1`.
+- Dark background `--bg-card`, `--text-secondary` axis labels, gridlines `rgba(255,255,255,0.05)`.
+
+-------------------------------------------------------------------------------
+11. THEMING & DARK/LIGHT MODE
+-------------------------------------------------------------------------------
+Wrap app in `ThemeProvider` (`next-themes`). Define light mode variables in `:root` and dark mode variables in `.dark`. Use tokenized class names in Tailwind (e.g. `bg-card`, `text-primary`).
+
+-------------------------------------------------------------------------------
+12. PREMIUM UI & MICRO-INTERACTIONS
+-------------------------------------------------------------------------------
+1. Universal Micro-Animations: `transition-all duration-200 ease-in-out` on buttons, cards, list items. Hover elevate (`hover:-translate-y-1 hover:shadow-lg`). Click active (`active:scale-95`).
+2. Glassmorphism & Depth: Sticky Header `bg-[var(--bg-header)]/80 backdrop-blur-md`. Modals/Dropdowns use `shadow-2xl shadow-black/50`.
+3. Custom Scrollbars: Thin 6px scrollbar (`bg-[var(--border)]` rounded thumb).
+4. Strict Z-Index Layering:
+   - `z-10`: Sticky Table Headers & Sticky Action Bars
+   - `z-20`: Top App Header
+   - `z-30`: Popovers, Tooltips & Dropdowns
+   - `z-40`: Modal Overlays & Drawers
+   - `z-50`: Toast Notifications & Critical Alerts
+
+-------------------------------------------------------------------------------
+13. ENTERPRISE UX SAFEGUARDS & ACCESSIBILITY
+-------------------------------------------------------------------------------
+1. Data Overflow: Dynamic text in constrained containers MUST use `truncate` wrapped in Tooltip component.
+2. Irreversible Action Safeguards: Highly destructive actions require manual phrase typing (e.g., type "DELETE" to confirm).
+3. WCAG Focus Rings: Explicit `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-page)]`.
+
+-------------------------------------------------------------------------------
+14-25. ADDITIONAL ENTERPRISE PATTERNS
+-------------------------------------------------------------------------------
+14. Print & Export: `@media print` stylesheet hides header, sidebar, action bars, toasts. Pure black text on white bg. Use `PrintableWrapper`.
+15. Keyboard Shortcuts: `Ctrl + K` (Search/Command), `Esc` (Close active modal), `Ctrl + S` (Submit form), `?` (Shortcut help overlay).
+16. Alert Banners: Inline message banners below header using `--warning-bg` or `--danger-bg` with close `X` icon.
+17. Data Density Modes: Toggle between Compact (32px row height, 12px font) and Comfortable (48px row height, 14px font). Persisted via `useLocalStorage`.
+18. Right-Click Context Menu: Custom dropdown menu on right-click (`z-30`) mirroring inline row actions.
+19. Tooltip Spec: `var(--bg-card)` background, `1px solid var(--border)`, 12px text, max-width 240px, 300ms show delay, `z-30`.
+20. Disabled & Read-Only States: Disabled = `opacity: 0.5`, `cursor: not-allowed`. Read-only = full opacity, dashed border, `cursor: default`.
+21. Number & Currency Formatting: Always Indian Numbering System (`₹1,23,456.00`). KPIs: `₹12.4L`, `₹2.3Cr`. Percentages: 1 decimal (`12.5%`). Centralized in `src/lib/formatters.ts`.
+22. Column Width Strategy: ID narrow (`w-24`), Name flexible (`truncate`), Status badge (`w-28` centered), Date (`w-32`), Amount right-aligned, Actions fixed narrow (`w-20` right-aligned).
+23. Drag & Drop Pattern: Library `@dnd-kit/core`. Dragging item `opacity: 0.5 scale-105`. Valid target dashed indigo border.
+24. Loading Button State: Replaces text with spinning `Loader2` icon and sets `disabled={true}` while preserving button width.
+25. Mobile Card-Stack Pattern: On mobile (<768px), tables collapse into vertically stacked cards with label-value pairs and top-right status badges.
+
+===============================================================================
+PART 2: SMART RESTAURANT & POS SYSTEM ARCHITECTURE & REQUIREMENTS
+===============================================================================
+
+CRITICAL ARCHITECTURE REQUIREMENTS:
+- ZERO BACKEND / DATABASE: No Node.js, Express, MongoDB, or external database APIs.
+- LOCALSTORAGE PERSISTENCE: All data MUST be persisted client-side using browser `localStorage`.
+- PWA & OFFLINE-FIRST: Progressive Web App with Service Worker setup to work smoothly offline.
+- CROSS-TAB REAL-TIME SYNC: Use native browser `window.addEventListener('storage', ...)` or custom React Hooks so changes in one tab (e.g., Waiter App or Customer QR) immediately reflect in another tab (e.g., Kitchen KDS or Cashier POS) in sub-seconds without page reloads.
+
+-------------------------------------------------------------------------------
+1. PROBLEM STATEMENT & BUSINESS GOALS
+-------------------------------------------------------------------------------
+1. Billing Quantity & Item Errors: Eliminates human error where items are billed incorrectly or running orders (KOT 1 + KOT 2) are omitted.
+2. Kitchen Miscommunication & Delay: Replaces paper slips with real-time digital KDS screens split by stations (Main Kitchen, Drinks Bar, Bakery KDS), complete with prep timers, Web Audio alerts, and void order alerts.
+3. Theft & Audit Leakage: Prevents staff from cancelling bills or deleting items silently without audit logs.
+4. Inventory Wastage: Auto-deducts recipe raw materials upon billing and alerts on low/expired stock.
+
+-------------------------------------------------------------------------------
+2. STRICT ROLE-BASED ACCESS CONTROL (RBAC) & AUTHENTICATION FLOW
+-------------------------------------------------------------------------------
+The application strictly enforces Role-Based Access Control (RBAC). Instead of exposing all operating views on a single shared screen, users MUST be authenticated and routed to their respective ISOLATED DASHBOARDS based on their assigned role:
+
+1. ADMIN DASHBOARD (`/admin`): Master control for Restaurant Owner/Manager.
+2. CUSTOMER DASHBOARD (`/customer`): Public dashboard for Customers (Advance booking, pre-order dishes, track live status & loyalty).
+3. CASHIER POS DASHBOARD (`/billing`): Terminal for Cashier / Billing Manager.
+4. WAITER CAPTAIN DASHBOARD (`/waiter`): Terminal for Waiters / Floor Captains.
+5. KITCHEN KDS DASHBOARD (`/kitchen`): Terminal for Kitchen Staff & Chefs.
+
+-------------------------------------------------------------------------------
+2.1 PUBLIC SIGNUP VS ADMIN STAFF CREDENTIALS GENERATION
+-------------------------------------------------------------------------------
+A. PUBLIC SELF-REGISTRATION (SIGNUP ALLOWED ONLY FOR 2 ROLES):
+   1. CUSTOMER: Can register an account via public signup form (`/auth/customer-signup`) using Name, Phone, Email, Password. Enables advance table reservations, pre-booking food dishes, tracking loyalty points, and viewing order history.
+   2. ADMIN (RESTAURANT OWNER): Can register the restaurant branch and master admin account via `/auth/admin-signup`.
+
+B. STAFF CREATION & CREDENTIAL GENERATION (STRICTLY ADMIN-ONLY — NO PUBLIC STAFF SIGNUP):
+   1. Cashiers, Waiters, and Kitchen Staff CANNOT self-register on the platform.
+   2. The Admin Dashboard includes a dedicated "Staff Management & Credential Generator" panel (`src/components/Admin/AdminStaffCredentialsPanel.tsx`).
+   3. Admin enters Staff Name, Phone, Role (`CASHIER` | `WAITER` | `KITCHEN`), and generates/assigns a unique System ID/Username & Password.
+   4. Staff members log in at `/auth/login` using the exact ID and Password generated by the Admin.
+   5. Admin can activate/deactivate staff accounts or reset passwords at any time.
+
+-------------------------------------------------------------------------------
+2.2 ADMIN REVENUE DASHBOARD & DYNAMIC DATE FILTERING
+-------------------------------------------------------------------------------
+The Admin Revenue Dashboard MUST feature interactive analytics charts (ApexCharts) with flexible time-range filtering:
+- Pre-set Time Ranges: `Monthly`, `Weekly`, `Daily` revenue & order volume aggregations.
+- Single-Day Custom Date Filter (Date Picker Component):
+  * Admin can select ANY specific single calendar date (e.g. `2026-08-08` or any past date).
+  * Instantly filters total revenue, total orders, Average Order Value (AOV), payment method split (Cash vs UPI vs Card), and top-selling items for that exact single day.
+
+-------------------------------------------------------------------------------
+2.3 COMPULSORY TABLE & LIST PAGINATION RULE
+-------------------------------------------------------------------------------
+EVERY tabular data container, list view, or data grid across ALL modules MUST include compulsory Pagination controls:
+- Controls: Page Size Selector (5, 10, 25, 50 items per page), First / Previous / Next / Last navigation buttons, Current Page Indicator, and Item Counter Label (e.g., "Showing 1–10 of 48 items").
+- Applicable Views: Menu Master Table, Inventory Stock Table, Advance Reservations Table, Sales History Table, CRM Customers Table, Audit Logs Table, Staff Credentials List, Wastage Log.
+
+-------------------------------------------------------------------------------
+3. COMPLETE MODULE SPECIFICATIONS & EDGE CASES
+-------------------------------------------------------------------------------
+
+MODULE A: Waiter View (Floor Captain App)
+- Visual Layouts: Toggle between Grid View and Floor Map View (Dining, AC, Outdoor).
+- Multilingual Support: 1-Click language toggle (English <-> Hindi) for UI labels, status messages, and tabs.
+- Live Customer Service Drawer & Ready Queue: Audio-visual pulsating banners to acknowledge Customer Call Bells (Water, Bill, Waiter) and 1-click "Serve Order" for KOTs marked READY.
+- Status-Coded Table Cards (Design System Badges):
+  * Available: Green Status Pill (`--success`)
+  * Occupied / Preparing: Red Status Pill (`--danger`)
+  * Billing Pending: Yellow Status Pill (`--warning`)
+  * Reserved / Running Order: Blue Status Pill (`--info`)
+- Advanced Table Operations:
+  * Table Merge: Combine 2 or more tables into a single bill.
+  * Table Shift / Move: Transfer an entire active order from Table A to Table B.
+  * Advance Table Reservation System: View and assign advance bookings with time slots and customer notes.
+- Digital Order Punching Modal (`z-40` Overlay):
+  * Searchable menu with categories, station tags, variants (Half / Full portion), and add-ons ("Extra Cheese", "Jain Prep", "Less Spicy").
+  * Dynamic Menu Pricing & Happy Hours Engine: Automatic time-slot discounts (e.g., Weekdays 4 PM to 7 PM - Beverages 20% OFF).
+  * Auto-Combo Deals Engine: Detects item combinations in cart (e.g., Burger + Fries + Coke) and automatically applies discounted Combo Price.
+  * Chef’s Daily Specials Board: Highlights special items with active badges and countdown expiry timers.
+  * Running Orders (Multiple KOTs): Punch KOT 1 (Starters), KOT 2 (Main Course), and KOT 3 (Desserts) on the same table, merging into 1 final bill.
+- Order Cancellation / Void Request: Waiter marks "Request Item Void" with a reason, triggering a visual red flash alert in KDS.
+- Live Prep Countdown: Synced countdown timer from Kitchen Manager's input; flashes RED if order exceeds 20 minutes.
+- Send to Bill Trigger: One-tap button to set table status to Billing Pending (Yellow).
+
+MODULE B: Kitchen Manager View (Digital KDS Screen with Station Routing)
+- Station Routing: Tabs to filter views: `[All Stations]`, `[Main Kitchen]`, `[Bar / Drinks]`, `[Bakery / Desserts]`.
+- Consolidated Dish Prep Aggregator: Automatically aggregates identical active dishes across all open KOT tickets into a single unified prep list (e.g., "Total 12 Naans Needed").
+- Completed Order Recall Engine: Ability to recall accidentally completed KOT orders back to the active KDS feed.
+- Kitchen Analytics Engine: Track average preparation time per station, SLA compliance rate, and peak hour bottlenecks.
+- Real-Time KOT Cards Grid:
+  * Cards ordered by timestamp showing Table Number, KOT Number, Station, Item List, Variants, Add-ons, and Special Notes.
+  * Audio Bell Notification: Synthesized audio chime sound using Web Audio API on new KOT arrival.
+  * Visual Red Flash Alert on Void / Cancelled Items.
+- Prep Time Input & Speed Metrics: Enter estimated prep time in minutes upon accepting order. Track actual prep completion time for Admin analytics.
+- Status Pipeline: Buttons for `[Received]` -> `[In Preparation]` -> `[Ready to Serve]`.
+- Emergency Stock Toggle: Instant toggle to mark dishes "Out of Stock" (`isAvailable: false`).
+- Waste Management Tracker: Log spoiled/damaged raw ingredients with reason and quantity.
+
+MODULE C: Bill Manager View (Zero-Error Cashier POS Terminal)
+- Automated Running Order Consolidation: Aggregates ALL KOTs (KOT 1 + KOT 2 + KOT 3) punched for the table directly from `localStorage` (0% manual re-entry).
+- POS Keyboard Hotkeys & Cash Tools: Hotkeys support (F1, F2, F4, F8, F9), Quick Cash Change Calculator, and Physical Cash Denomination Counter for drawer reconciliation.
+- Cashier Stock Recovery Hub: Centralized modal to manage kitchen low-stock alerts, tracking procurement SLAs (In Progress, Stock Supplied).
+- WhatsApp CRM Auto-Sync: Cross-tab auto-filling of customer phone numbers requested via the QR menu for instant loyalty calculation and WhatsApp receipt sharing.
+- Advanced Billing & Tax Calculation Engine:
+  * Itemized subtotal breakdown.
+  * Multi-Tax Slabs: CGST (2.5%) + SGST (2.5%), optional Service Charge (5%), and Liquor VAT (18/22%). Round-off option included.
+  * Discounts & NC Billing: Apply percentage/flat discounts or mark as "Non-Chargeable / Complimentary" (requires Admin PIN + reason).
+  * Customer CRM Tagging & Loyalty Points System: Search or add customer phone/name. Auto-calculate 5% loyalty cashback points on bill value and allow redeeming accrued points for instant bill discount.
+- Split Payment & Split Bill Options:
+  * Split Bill (Guest Splitting Engine): Divide total amount equally among N guests or perform an Itemized Split (assign specific dishes to specific guests).
+  * Split Payment: Pay ₹300 via Cash (`--pay-cash`) + ₹200 via UPI (`--pay-upi`) on same invoice.
+- Dynamic UPI QR Code Generation: Client-side JS generated UPI QR code with exact final bill amount for customer scanning.
+- Digital Bill Sharing (SMS / WhatsApp): Pre-filled WhatsApp Web link (`https://wa.me/...`) sharing itemized receipt text to customer's mobile number.
+- Thermal Receipt Print & Table Reset:
+  * Optimized `@media print` thermal receipt layout for both 80mm POS Receipts and 58mm KOT slips.
+  * Checkout Automation:
+    1. Triggers Recipe-Based Inventory Auto-Deduction.
+    2. Saves transaction record to `salesHistory`.
+    3. Updates customer loyalty points in `crmCustomers`.
+    4. Resets Table Status to Available (Green).
+
+MODULE D: Admin, Inventory, Shift & Audit Dashboard
+- Live Revenue Ticker & KPI Cards (Pattern 5a): Real-time sales counter, today's order count, average table turn time, KDS kitchen speed, and payment split metrics (Cash vs UPI vs Card).
+- Master Restaurant Settings: Configure GSTIN, CGST/SGST rates, Default Prep Time SLAs, and UPI VPA (`app_restaurant_settings`).
+- Staff Attendance & Automated Payroll: Daily attendance logging (Present, Absent, Half-Day) and a payslip engine calculating net salary with deductions and bonuses (`app_staff_attendance`, `app_salary_records`).
+- Coupons & Discount Rules: Promo code manager for PERCENTAGE, FLAT discounts, and usage limits (`app_coupons`).
+- Low Stock SLA Tracker & Recovery Hub: 24-hour procurement SLA countdown for low-stock alerts from kitchen, with tracking for overdue items.
+- Menu, Recipe, Happy Hours & QR Standee Generator:
+  * Add/edit dishes, variants, prices, categories, station routing.
+  * Link recipe ingredients (e.g., 1x Paneer Plate = 200g Paneer, 50g Butter).
+  * Table QR Code Generator: Generate and print table-specific QR Code Standees (`?table=T-01`) for self-ordering.
+- Inventory & Expiry Tracker:
+  * Auto-deduct raw materials upon billing.
+  * Perishable Item Expiry Alerts & Low-Stock Warnings.
+- Shift Management & Day-Close (Z-Report):
+  * Opening Cash balance entry at shift start.
+  * End-of-Day Register Closure: Expected Cash vs Actual Cash entry with variance report.
+- Audit Log & Anti-Theft Protection: Logs sensitive actions (Bill Cancellations, Item Voids, Discounts Applied, Loyalty Redemptions) with timestamp and User Role.
+- Data Safety, Backup & Reset:
+  * LocalStorage Storage Limit Monitor (alerts when approaching 5MB).
+  * One-click "Export Backup JSON", "Import Restore JSON", and Admin-PIN protected "Emergency System Reset".
+
+MODULE E: Customer QR Self-Ordering & Feedback Engine
+- Simulated Web View: Accessible via Table QR code scan simulation (`?table=T-01`). Includes a Desktop Fallback / QR Image Uploader.
+- Order Re-Scan Persistence (Hydration): Auto-hydrates the ongoing active order and cooking progress if the user accidentally closes the tab and re-scans the QR.
+- Floating Service Call Bell: Allows customers to request Water, Bill, Napkins, or Waiter, syncing directly to Waiter and Cashier terminals.
+- Features:
+  * Mobile-optimized digital menu browser with search, dietary filters (Veg/Non-Veg/Jain), and Chef's Specials.
+  * Self-Cart & Add to Table Order: Submits KOT directly to Kitchen & Waiter App via `localStorage` sync.
+  * Live Order Status Tracker: Real-time progress (`Received` -> `Cooking` -> `Ready`).
+  * Digital Customer Feedback Form: 5-Star rating system with feedback tags on bill completion, synced to Admin Analytics.
+
+===============================================================================
+4. LOCALSTORAGE DATA ARCHITECTURE (MOCK DATABASE)
+===============================================================================
+Initialize `localStorage` with seed data if keys don't exist:
+
+1. `app_tables`:
+   `[{ id: string, tableNumber: string, section: "Dining"|"AC"|"Outdoor", status: "AVAILABLE"|"OCCUPIED"|"BILLING_PENDING"|"RESERVED", currentOrderId?: string, mergedTables: string[] }]`
+
+2. `app_menu`:
+   `[{ id: string, name: string, price: number, category: string, station: "Kitchen"|"Bar"|"Bakery", isAvailable: boolean, variants: [{ name: string, price: number }], recipe: [{ ingredientId: string, qty: number }], isSpecial: boolean, specialExpiry?: number }]`
+
+3. `app_combos`:
+   `[{ id: string, name: string, requiredItemIds: string[], comboPrice: number, happyHourStart?: string, happyHourEnd?: string }]`
+
+4. `app_inventory`:
+   `[{ id: string, name: string, currentStock: number, unit: "kg"|"g"|"L"|"pcs", threshold: number, expiryDate: string }]`
+
+5. `app_orders`:
+   `[{ id: string, tableNumber: string, kots: [{ kotId: string, station: string, items: [{ itemId: string, qty: number, notes?: string, status: "PENDING"|"COOKING"|"READY"|"VOID_REQUESTED"|"VOIDED" }], timestamp: number }], prepTimeMins: number, status: "ACTIVE"|"COMPLETED"|"CANCELLED", customerInfo?: { name: string, phone: string } }]`
+
+6. `app_sales_history`:
+   `[{ id: string, orderId: string, tableNumber: string, subtotal: number, cgst: number, sgst: number, serviceCharge: number, vat: number, discount: number, loyaltyRedeemed: number, totalAmount: number, paymentMethod: "CASH"|"UPI"|"CARD"|"SPLIT", splitDetails?: { cash: number, upi: number, card: number }, cashierId: string, timestamp: number }]`
+
+7. `app_crm_customers`:
+   `[{ phone: string, name: string, loyaltyPoints: number, totalVisits: number, history: string[] }]`
+
+8. `app_reservations`:
+   `[{ id: string, tableId: string, customerName: string, phone: string, guestCount: number, slotTime: string, status: "CONFIRMED"|"CANCELLED" }]`
+
+9. `app_shift_register`:
+   `{ id: string, openingCash: number, closingCash?: number, expectedCash?: number, variance?: number, totalSales: number, shiftStatus: "OPEN"|"CLOSED", openedAt: number, closedAt?: number, waiterStats: Record<string, { ordersServed: number, totalSales: number }> }`
+
+10. `app_audit_logs`:
+    `[{ id: string, action: string, details: string, userRole: string, timestamp: number }]`
+
+11. `app_wastage`:
+    `[{ id: string, ingredientId: string, qty: number, unit: string, reason: string, timestamp: number }]`
+
+12. `app_feedbacks`:
+    `[{ id: string, orderId: string, tableNumber: string, rating: number, comment: string, timestamp: number }]`
+
+13. `app_users` (Authentication & Staff Credentials Store):
+    `[{ id: string, username: string, passwordHash: string, role: "ADMIN" | "CUSTOMER" | "CASHIER" | "WAITER" | "KITCHEN", name: string, phone?: string, createdByAdmin: boolean, createdAt: number, isActive: boolean }]`
+
+14. `app_staff_attendance`:
+    `[{ id: string, staffId: string, date: string, status: "PRESENT"|"ABSENT"|"HALF_DAY" }]`
+
+15. `app_salary_records`:
+    `[{ id: string, staffId: string, month: string, baseSalary: number, absenceDeductions: number, bonus: number, netPayable: number, status: "PAID"|"PENDING" }]`
+
+16. `app_coupons`:
+    `[{ id: string, code: string, type: "PERCENTAGE"|"FLAT", discountValue: number, minOrderValue: number, usageLimit: number, expiryDate: string, isActive: boolean }]`
+
+17. `app_restaurant_settings`:
+    `{ gstin: string, cgstRate: number, sgstRate: number, serviceCharge: number, liquorVat: number, upiVpa: string, defaultPrepTime: number, slaWarningMins: number, slaDangerMins: number }`
+
+18. `app_stock_alerts`:
+    `[{ id: string, ingredientId: string, status: "ALERT_SENT"|"IN_PROGRESS"|"DISPATCHED"|"RESTOCKED", timestamp: number }]`
+
+19. `app_service_requests`:
+    `[{ id: string, tableNumber: string, requestType: "WATER"|"BILL"|"NAPKINS"|"WAITER", customerPhone?: string, status: "PENDING"|"ACKNOWLEDGED", timestamp: number }]`
+
+===============================================================================
+5. DELIVERABLES REQUIRED
+===============================================================================
+Provide fully functioning React/Next.js code structure including:
+1. `globals.css` with complete CSS variable mappings for Dark and Light themes.
+2. `src/config/statusBadgeConfig.ts` with centralized badge status color maps.
+3. LocalStorage context/hooks for cross-tab real-time sync (`window.addEventListener('storage', ...)`).
+4. Web Audio API helper utility for kitchen bell sound synthesis.
+5. All 5 complete module components (Waiter App, Kitchen KDS, Cashier POS, Admin Dashboard, Customer QR).
+6. Print CSS stylesheet for 80mm POS Receipts and 58mm KOT Slips.
+
+

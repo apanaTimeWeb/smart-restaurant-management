@@ -1,0 +1,53 @@
+# ─── Dependencies ─────────────────────────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+
+# ─── Next.js Build Output ─────────────────────────────────────────────────────
+.next/
+out/
+build/
+dist/
+
+# ─── Environment Variables (NEVER commit secrets) ─────────────────────────────
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# ─── Vercel ───────────────────────────────────────────────────────────────────
+.vercel
+
+# ─── TypeScript ───────────────────────────────────────────────────────────────
+*.tsbuildinfo
+next-env.d.ts
+
+# ─── OS Files ─────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── Editor / IDE ─────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ─── Logs ─────────────────────────────────────────────────────────────────────
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# ─── Project Planning & AI Working Files (not part of source code) ────────────
+../mainprompt.text
+../cloud.txt
+../structure.txt
+../structure.md
+
+# ─── PWA / Service Worker generated files ─────────────────────────────────────
+public/sw.js
+public/workbox-*.js
+public/worker-*.js
