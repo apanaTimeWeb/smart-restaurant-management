@@ -23,7 +23,11 @@ export default function ListHotelPage() {
   useEffect(() => {
     if (!currentUser) return;
     const all = getStoredTenants();
-    const myTenant = all.find(t => t.ownerId === currentUser.id);
+    let myTenant = all.find(t => t.ownerId === currentUser.id);
+    if (!myTenant && currentUser.role === "ADMIN") {
+      const activeTid = typeof window !== "undefined" ? localStorage.getItem("active_tenant_id") : null;
+      myTenant = all.find(t => t.tenantId === activeTid) || all[0];
+    }
     if (myTenant) {
       setActiveTenant(myTenant);
       setDescriptionInput(myTenant.description || "");
