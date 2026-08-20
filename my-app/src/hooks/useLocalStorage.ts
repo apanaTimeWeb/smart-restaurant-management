@@ -69,32 +69,47 @@ export function useLocalStorage<T>(
     }
 
     const db = getMasterDB();
-    if (db.tenants_data && db.tenants_data[tid] && db.tenants_data[tid][key] !== undefined) {
-      return db.tenants_data[tid][key] as T;
+    const existingData = db.tenants_data && db.tenants_data[tid] ? db.tenants_data[tid][key] : undefined;
+    
+    // Check if existing data is "empty" (like [] or {})
+    const isEmpty = existingData === undefined || 
+                    (Array.isArray(existingData) && existingData.length === 0) || 
+                    (existingData !== null && typeof existingData === "object" && Object.keys(existingData).length === 0);
+
+    if (!isEmpty) {
+      return existingData as T;
     }
     
-    // Migration: If tenant data for this key is missing in master DB
+    // Migration: If tenant data for this key is missing or empty in master DB
     try {
       // 1. Check if they had an old scoped key (app_menu_T123) from previous version
       const oldScopedItem = window.localStorage.getItem(`${key}_${tid}`);
       if (oldScopedItem) {
          const legacyData = JSON.parse(oldScopedItem);
-         if (!db.tenants_data[tid]) db.tenants_data[tid] = {};
-         db.tenants_data[tid][key] = legacyData;
-         setTimeout(() => saveMasterDB(db), 0);
-         return legacyData as T;
+         if (Array.isArray(legacyData) && legacyData.length > 0) {
+           if (!db.tenants_data[tid]) db.tenants_data[tid] = {};
+           db.tenants_data[tid][key] = legacyData;
+           setTimeout(() => saveMasterDB(db), 0);
+           return legacyData as T;
+         }
       }
       
       // 2. Fallback: migrate from the global flat seeded keys to the active tenant
       const item = window.localStorage.getItem(key);
       if (item) {
          const legacyData = JSON.parse(item);
-         if (!db.tenants_data[tid]) db.tenants_data[tid] = {};
-         db.tenants_data[tid][key] = legacyData;
-         setTimeout(() => saveMasterDB(db), 0);
-         return legacyData as T;
+         // If we're fallback migrating, only save if it actually has items (don't overwrite with empty)
+         if ((Array.isArray(legacyData) && legacyData.length > 0) || (legacyData && !Array.isArray(legacyData) && Object.keys(legacyData).length > 0)) {
+           if (!db.tenants_data[tid]) db.tenants_data[tid] = {};
+           db.tenants_data[tid][key] = legacyData;
+           setTimeout(() => saveMasterDB(db), 0);
+           return legacyData as T;
+         }
       }
     } catch {}
+
+    // If still empty or no fallback, return the existing empty data or initialize it
+    if (existingData !== undefined) return existingData as T;
 
     // If it doesn't exist, we save the initial empty value so the owner appears in the JSON!
     if (tid && tid !== "SUPER_ADMIN") {
