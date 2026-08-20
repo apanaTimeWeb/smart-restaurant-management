@@ -85,16 +85,14 @@ export function useLocalStorage<T>(
          return legacyData as T;
       }
       
-      // 2. Only if this is the default admin, migrate from the global flat seeded keys!
-      if (tid === "usr-admin-01") {
-        const item = window.localStorage.getItem(key);
-        if (item) {
-           const legacyData = JSON.parse(item);
-           if (!db.tenants_data[tid]) db.tenants_data[tid] = {};
-           db.tenants_data[tid][key] = legacyData;
-           setTimeout(() => saveMasterDB(db), 0);
-           return legacyData as T;
-        }
+      // 2. Fallback: migrate from the global flat seeded keys to the active tenant
+      const item = window.localStorage.getItem(key);
+      if (item) {
+         const legacyData = JSON.parse(item);
+         if (!db.tenants_data[tid]) db.tenants_data[tid] = {};
+         db.tenants_data[tid][key] = legacyData;
+         setTimeout(() => saveMasterDB(db), 0);
+         return legacyData as T;
       }
     } catch {}
 
