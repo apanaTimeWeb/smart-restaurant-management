@@ -1,7 +1,7 @@
-// RESPONSIBILITY: Single source of truth for all localStorage seed data.
+﻿// RESPONSIBILITY: Single source of truth for all localStorage seed data.
 // Initializes 12 keys with realistic Indian restaurant data on first app load.
-// Skips keys that already exist — never overwrites user data.
-// DATA FLOW: initializeLocalStorageSeeds() → localStorage → useLocalStorage hook → components
+// Skips keys that already exist â€” never overwrites user data.
+// DATA FLOW: initializeLocalStorageSeeds() â†’ localStorage â†’ useLocalStorage hook â†’ components
 
 import type {
   AppTable,
@@ -18,7 +18,7 @@ import type {
   AppSalaryRecord,
 } from "@/types/appTypes";
 
-// ─── Storage Key Constants (Rule 35: No magic strings) ───────────────────────
+// â”€â”€â”€ Storage Key Constants (Rule 35: No magic strings) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const STORAGE_KEYS = {
   TABLES:                   "app_tables",
@@ -57,7 +57,7 @@ export const STORAGE_KEYS = {
 
 export type StorageKey = typeof STORAGE_KEYS[keyof typeof STORAGE_KEYS];
 
-// ─── Seed Data ────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Seed Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const SEED_TABLES: AppTable[] = [
   { id: "tbl-01", tableNumber: "T-01", section: "Dining",  status: "AVAILABLE",       currentOrderId: null,    mergedTables: [] },
@@ -73,28 +73,28 @@ const SEED_TABLES: AppTable[] = [
 ];
 
 const SEED_MENU: AppMenuItem[] = [
-  // Starters — Kitchen
+  // Starters â€” Kitchen
   { id: "menu-01", name: "Paneer Tikka",        price: 280, category: "Starters",     station: "Kitchen", isAvailable: true,  variants: [{ name: "Half", price: 180 }, { name: "Full", price: 280 }], recipe: [{ ingredientId: "ing-01", qty: 200 }, { ingredientId: "ing-02", qty: 20 }], isSpecial: true,  specialExpiry: Date.now() + 86400000 },
   { id: "menu-02", name: "Veg Spring Roll",     price: 160, category: "Starters",     station: "Kitchen", isAvailable: true,  variants: [], recipe: [{ ingredientId: "ing-05", qty: 100 }], isSpecial: false },
   { id: "menu-03", name: "Chicken Tikka",       price: 320, category: "Starters",     station: "Kitchen", isAvailable: true,  variants: [{ name: "Half", price: 200 }, { name: "Full", price: 320 }], recipe: [{ ingredientId: "ing-06", qty: 250 }], isSpecial: false },
   { id: "menu-04", name: "Hara Bhara Kabab",    price: 180, category: "Starters",     station: "Kitchen", isAvailable: true,  variants: [], recipe: [{ ingredientId: "ing-05", qty: 150 }], isSpecial: false },
-  // Main Course — Kitchen
+  // Main Course â€” Kitchen
   { id: "menu-05", name: "Dal Makhani",         price: 220, category: "Main Course",  station: "Kitchen", isAvailable: true,  variants: [], recipe: [{ ingredientId: "ing-07", qty: 150 }, { ingredientId: "ing-02", qty: 30 }], isSpecial: false },
   { id: "menu-06", name: "Paneer Butter Masala",price: 260, category: "Main Course",  station: "Kitchen", isAvailable: true,  variants: [], recipe: [{ ingredientId: "ing-01", qty: 200 }, { ingredientId: "ing-02", qty: 40 }], isSpecial: false },
   { id: "menu-07", name: "Veg Biryani",         price: 240, category: "Main Course",  station: "Kitchen", isAvailable: true,  variants: [{ name: "Half", price: 160 }, { name: "Full", price: 240 }], recipe: [{ ingredientId: "ing-08", qty: 200 }, { ingredientId: "ing-05", qty: 100 }], isSpecial: false },
   { id: "menu-08", name: "Chicken Curry",       price: 300, category: "Main Course",  station: "Kitchen", isAvailable: true,  variants: [], recipe: [{ ingredientId: "ing-06", qty: 300 }], isSpecial: false },
   { id: "menu-09", name: "Shahi Paneer",        price: 280, category: "Main Course",  station: "Kitchen", isAvailable: false, variants: [], recipe: [{ ingredientId: "ing-01", qty: 200 }], isSpecial: false },
-  // Breads — Kitchen
+  // Breads â€” Kitchen
   { id: "menu-10", name: "Butter Naan",         price: 40,  category: "Breads",       station: "Kitchen", isAvailable: true,  variants: [], recipe: [{ ingredientId: "ing-03", qty: 80 }, { ingredientId: "ing-02", qty: 10 }], isSpecial: false },
   { id: "menu-11", name: "Tandoori Roti",       price: 25,  category: "Breads",       station: "Kitchen", isAvailable: true,  variants: [], recipe: [{ ingredientId: "ing-03", qty: 60 }], isSpecial: false },
   { id: "menu-12", name: "Garlic Naan",         price: 50,  category: "Breads",       station: "Kitchen", isAvailable: true,  variants: [], recipe: [{ ingredientId: "ing-03", qty: 80 }, { ingredientId: "ing-02", qty: 10 }], isSpecial: false },
   { id: "menu-13", name: "Paratha",             price: 60,  category: "Breads",       station: "Kitchen", isAvailable: true,  variants: [], recipe: [{ ingredientId: "ing-03", qty: 100 }], isSpecial: false },
-  // Beverages — Bar
+  // Beverages â€” Bar
   { id: "menu-14", name: "Mango Lassi",         price: 120, category: "Beverages",    station: "Bar",     isAvailable: true,  variants: [], recipe: [{ ingredientId: "ing-04", qty: 200 }], isSpecial: true, specialExpiry: Date.now() + 43200000 },
   { id: "menu-15", name: "Masala Chai",         price: 40,  category: "Beverages",    station: "Bar",     isAvailable: true,  variants: [], recipe: [{ ingredientId: "ing-04", qty: 100 }], isSpecial: false },
   { id: "menu-16", name: "Fresh Lime Soda",     price: 60,  category: "Beverages",    station: "Bar",     isAvailable: true,  variants: [], recipe: [], isSpecial: false },
   { id: "menu-17", name: "Cold Coffee",         price: 100, category: "Beverages",    station: "Bar",     isAvailable: true,  variants: [], recipe: [{ ingredientId: "ing-04", qty: 150 }], isSpecial: false },
-  // Desserts — Bakery
+  // Desserts â€” Bakery
   { id: "menu-18", name: "Gulab Jamun",         price: 80,  category: "Desserts",     station: "Bakery",  isAvailable: true,  variants: [{ name: "2 Pcs", price: 80 }, { name: "4 Pcs", price: 140 }], recipe: [{ ingredientId: "ing-03", qty: 50 }, { ingredientId: "ing-04", qty: 50 }], isSpecial: false },
   { id: "menu-19", name: "Rasgulla",            price: 70,  category: "Desserts",     station: "Bakery",  isAvailable: true,  variants: [], recipe: [{ ingredientId: "ing-01", qty: 100 }], isSpecial: false },
   { id: "menu-20", name: "Chocolate Brownie",   price: 120, category: "Desserts",     station: "Bakery",  isAvailable: true,  variants: [], recipe: [{ ingredientId: "ing-03", qty: 80 }], isSpecial: false },
@@ -359,11 +359,11 @@ const SEED_USERS: AppUser[] = [
   },
 ];
 
-// ─── Main Initializer Function ────────────────────────────────────────────────
+// â”€â”€â”€ Main Initializer Function â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 /**
  * Initializes all 13 localStorage keys with seed data on first app load.
- * Skips any key that already has data — never overwrites existing user data.
+ * Skips any key that already has data â€” never overwrites existing user data.
  * Must be called once at app startup (e.g., in AppShell useEffect).
  */
 export function initializeLocalStorageSeeds(): void {
@@ -391,4 +391,28 @@ export function initializeLocalStorageSeeds(): void {
       window.localStorage.setItem(key, JSON.stringify(data));
     }
   });
+  // MIGRATION: Ensure all existing seeded staff users have a tenantId so they connect to the seeded DB
+  try {
+    const rawUsers = window.localStorage.getItem(STORAGE_KEYS.USERS);
+    if (rawUsers) {
+      let users = JSON.parse(rawUsers);
+      let updated = false;
+      users = users.map((u: any) => {
+        if (["ADMIN", "WAITER", "CASHIER", "KITCHEN"].includes(u.role) && !u.tenantId) {
+          updated = true;
+          return { ...u, tenantId: "tenant-royal-spice-01" };
+        }
+        return u;
+      });
+      if (updated) {
+        window.localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
+        const activeTid = window.localStorage.getItem("active_tenant_id");
+        if (activeTid && activeTid.startsWith("usr-")) {
+          window.localStorage.setItem("active_tenant_id", "tenant-royal-spice-01");
+        }
+      }
+    }
+  } catch (e) {
+    console.error("Migration failed:", e);
+  }
 }
