@@ -1,4 +1,4 @@
-﻿// RESPONSIBILITY: Single source of truth for all localStorage seed data.
+// RESPONSIBILITY: Single source of truth for all localStorage seed data.
 // Initializes 12 keys with realistic Indian restaurant data on first app load.
 // Skips keys that already exist â€” never overwrites user data.
 // DATA FLOW: initializeLocalStorageSeeds() â†’ localStorage â†’ useLocalStorage hook â†’ components
@@ -410,6 +410,16 @@ export function initializeLocalStorageSeeds(): void {
         if (activeTid && activeTid.startsWith("usr-")) {
           window.localStorage.setItem("active_tenant_id", "tenant-royal-spice-01");
         }
+      }
+    }
+
+    // MIGRATION: Also update CURRENT_USER if they are already logged in without a tenantId
+    const rawCurrentUser = window.localStorage.getItem(STORAGE_KEYS.CURRENT_USER);
+    if (rawCurrentUser) {
+      const currentUser = JSON.parse(rawCurrentUser);
+      if (["ADMIN", "WAITER", "CASHIER", "KITCHEN"].includes(currentUser.role) && !currentUser.tenantId) {
+        currentUser.tenantId = "tenant-royal-spice-01";
+        window.localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(currentUser));
       }
     }
   } catch (e) {

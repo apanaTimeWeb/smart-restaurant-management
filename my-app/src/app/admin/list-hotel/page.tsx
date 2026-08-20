@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Save, Image as ImageIcon, Star, ShieldCheck, MapPin, Tag, Plus, Trash2, Camera } from "lucide-react";
 import { getStoredTenants, saveTenants } from "@/lib/tenantService";
 import { useAuth } from "@/app/auth/auth_hooks/useAuth";
+import { AuthGuard } from "@/app/auth/auth_components/AuthGuard";
 import { dispatchNotification } from "@/lib/notificationService";
 import type { AppTenant, AppTenantSpecialItem } from "@/types/appTypes";
 
@@ -129,11 +130,16 @@ export default function ListHotelPage() {
   };
 
   if (!activeTenant) {
-    return <div className="p-8 text-center text-text-secondary">Loading profile...</div>;
+    return (
+      <AuthGuard allowedRoles={["ADMIN", "HOTEL_OWNER"]}>
+        <div className="p-8 text-center text-text-secondary">Loading profile...</div>
+      </AuthGuard>
+    );
   }
 
   return (
-    <div className="max-w-5xl mx-auto flex flex-col gap-8 pb-12">
+    <AuthGuard allowedRoles={["ADMIN", "HOTEL_OWNER"]}>
+      <div className="max-w-5xl mx-auto flex flex-col gap-8 pb-12">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-black text-text-primary">Enrich Hotel Profile</h1>
@@ -324,5 +330,6 @@ export default function ListHotelPage() {
         </div>
       </div>
     </div>
+    </AuthGuard>
   );
 }
