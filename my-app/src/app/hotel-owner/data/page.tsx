@@ -46,7 +46,7 @@ export default function AdminDataPage() {
   }
 
   return (
-    <AuthGuard allowedRoles={["ADMIN"]}>
+    <AuthGuard allowedRoles={["HOTEL_OWNER"]}>
       <div className="flex flex-col gap-5">
         <DataPageHeader />
         <AdminDataPanel

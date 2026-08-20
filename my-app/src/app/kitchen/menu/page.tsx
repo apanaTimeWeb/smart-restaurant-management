@@ -94,7 +94,7 @@ export default function AdminMenuPage() {
   }
 
   return (
-    <AuthGuard allowedRoles={["ADMIN"]}>
+    <AuthGuard allowedRoles={["KITCHEN"]}>
       <div className="flex flex-col gap-6">
         <MenuPageHeader onAddClick={handleAddClick} />
 

@@ -43,7 +43,7 @@ export default function AdminInventoryPage() {
   }
 
   return (
-    <AuthGuard allowedRoles={["ADMIN"]}>
+    <AuthGuard allowedRoles={["KITCHEN"]}>
       <div className="flex flex-col gap-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <InventoryPageHeader />
