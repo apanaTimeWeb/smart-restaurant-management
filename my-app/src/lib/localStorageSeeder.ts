@@ -346,6 +346,17 @@ const SEED_USERS: AppUser[] = [
     createdAt: NOW - 648000000,
     isActive: true,
   },
+  {
+    id: "usr-owner-01",
+    username: "owner",
+    passwordHash: "owner123",
+    role: "HOTEL_OWNER",
+    name: "Vikram Mehta",
+    phone: "9876543215",
+    createdByAdmin: false,
+    createdAt: NOW - 648000000,
+    isActive: true,
+  },
 ];
 
 // ─── Main Initializer Function ────────────────────────────────────────────────
