@@ -137,7 +137,8 @@ export function WaiterTableQrModal({ table, isOpen, onClose }: WaiterTableQrModa
   const [isCopied, setIsCopied] = useState(false);
   const [customerUrl, setCustomerUrl] = useState("");
 
-  const { tenantId } = useAuth();
+  const { currentUser } = useAuth();
+  const tenantId = currentUser?.tenantId || "";
 
   useEffect(() => {
     if (!table || !isOpen) return;
