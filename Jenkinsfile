@@ -36,7 +36,7 @@ pipeline {
                 dir('my-app') {
                     echo "Deploying Next.js Frontend to PM2 on Port ${FRONTEND_PORT}..."
                     // PORT variable force karega Next.js ko 3000 par chalne ke liye
-                    sh 'PORT=$FRONTEND_PORT pm2 restart next-frontend || PORT=$FRONTEND_PORT pm2 start npm --name "next-frontend" -- run start'
+                    sh 'PORT=$FRONTEND_PORT pm2 restart restaurant-frontend || PORT=$FRONTEND_PORT pm2 start npm --name "restaurant-frontend" -- run start'
                 }
             }
         }
