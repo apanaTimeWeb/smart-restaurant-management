@@ -1,6 +1,6 @@
 "use client";
 
-// RESPONSIBILITY: Hotel Profile Onboarding Creation Wizard (`/owner/onboarding`).
+// RESPONSIBILITY: Hotel Profile Onboarding Creation Wizard (`/manager/onboarding`).
 // Collects restaurant details (Basic info, Location, FSSAI, GSTIN, Logo/Banner, UPI VPA).
 // Submits application to Super Admin Verification Queue (status: APPROVAL_PENDING).
 // DATA FLOW: owner/onboarding/page.tsx -> registerNewTenant() -> owner/dashboard/page.tsx
@@ -68,7 +68,7 @@ export default function OwnerOnboardingPage() {
         bannerUrl: formData.bannerUrl,
       });
 
-      router.push("/owner/dashboard");
+      router.push("/manager/dashboard");
     }, 800);
   };
 

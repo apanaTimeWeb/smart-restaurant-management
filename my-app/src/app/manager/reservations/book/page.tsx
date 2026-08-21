@@ -1,6 +1,6 @@
 ﻿"use client";
 
-// RESPONSIBILITY: Online Advance Table Booking & Zero-Wait Pre-Ordering System (`/owner_reservations/book`).
+// RESPONSIBILITY: Online Advance Table Booking & Zero-Wait Pre-Ordering System (`/manager/reservations/book`).
 // Customer selects Date, Time, and Guest Count (e.g. 10 Persons).
 // Calculates per-person deposit (10 x â‚¹100 = â‚¹1,000), collects payment via multi-gateway,
 // and opens the Zero-Wait Pre-Order Menu Screen to select dishes prior to arrival.
@@ -192,7 +192,7 @@ function AdvanceReservationBookingPageContent() {
             </div>
             
             <Link 
-              href={`/auth/login?redirect=${encodeURIComponent(`/owner_reservations/book?tenant=${tenantIdParam}`)}`}
+              href={`/auth/login?redirect=${encodeURIComponent(`/manager/reservations/book?tenant=${tenantIdParam}`)}`}
               className="w-full rounded-xl bg-primary py-3.5 text-sm font-black text-white hover:bg-primary/90 transition-all shadow-md flex items-center justify-center gap-2"
             >
               <User size={18} />

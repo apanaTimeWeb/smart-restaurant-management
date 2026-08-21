@@ -449,7 +449,7 @@ export default function OwnerDashboardPage() {
                 </Link>
 
                 <Link
-                  href="/owner/reservations"
+                  href="/manager/reservations"
                   className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-4 shadow-xs hover:border-blue-500 hover:shadow-md transition-all"
                 >
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/10 text-blue-500">
@@ -479,7 +479,7 @@ export default function OwnerDashboardPage() {
                 </Link>
 
                 <Link
-                  href="/owner/staff-credentials"
+                  href="/manager/staff-credentials"
                   className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-4 shadow-xs hover:border-emerald-400 hover:shadow-md transition-all"
                 >
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-400/10 text-emerald-500">

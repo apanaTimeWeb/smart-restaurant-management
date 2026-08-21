@@ -65,7 +65,7 @@ function UnifiedRegisterPageContent(): React.JSX.Element {
       if (redirect) {
         router.push(redirect);
       } else if (selectedRole === "MANAGER") {
-        router.push("/owner/dashboard");
+        router.push("/manager/dashboard");
       } else {
         router.push("/");
       }

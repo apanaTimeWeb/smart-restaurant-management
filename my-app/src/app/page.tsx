@@ -323,7 +323,7 @@ export default function SaaSMarketplaceLandingPage(): React.JSX.Element {
 
             <div className="shrink-0 flex flex-col gap-3 w-full sm:w-auto">
               <Link
-                href="/owner/register"
+                href="/manager/register"
                 className="flex items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-4 font-black text-sm text-white shadow-xl hover:bg-primary/90 active:scale-95 transition-all"
               >
                 <span>Register Your Restaurant</span>

@@ -37,7 +37,7 @@ export default function AdminDashboardPage() {
       const ownerTenants = getTenantsByOwner(currentUser.id, currentUser.phone || undefined);
       const activeTenant = ownerTenants.find(t => t.status === "ACTIVE");
       if (!activeTenant) {
-        window.location.href = "/owner/dashboard";
+        window.location.href = "/manager/dashboard";
       }
     }
   }, [authHydrated, currentUser]);

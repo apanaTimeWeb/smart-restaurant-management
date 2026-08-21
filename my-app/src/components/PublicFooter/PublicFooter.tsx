@@ -32,7 +32,7 @@ export function PublicFooter() {
           <div className="flex flex-col gap-4">
             <h3 className="font-bold text-text-primary uppercase tracking-wider text-sm mb-2">Platform</h3>
             <Link href="/" className="text-sm text-text-secondary hover:text-primary transition-colors">Find Restaurants</Link>
-            <Link href="/owner/register" className="text-sm text-text-secondary hover:text-primary transition-colors">List Your Restaurant</Link>
+            <Link href="/manager/register" className="text-sm text-text-secondary hover:text-primary transition-colors">List Your Restaurant</Link>
             <Link href="/auth/login" className="text-sm text-text-secondary hover:text-primary transition-colors">Partner Login</Link>
             <Link href="#" className="text-sm text-text-secondary hover:text-primary transition-colors">Pricing & Plans</Link>
             <Link href="#" className="text-sm text-text-secondary hover:text-primary transition-colors">API Documentation</Link>

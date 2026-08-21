@@ -37,7 +37,7 @@ export default function OwnerRegisterPage() {
     setTimeout(() => {
       // Simulate successful registration & store owner session
       login(formData.phone, "MANAGER");
-      router.push("/owner/dashboard");
+      router.push("/manager/dashboard");
     }, 600);
   };
 

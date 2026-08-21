@@ -14,7 +14,7 @@ export function PublicNavbar() {
   const getDashboardLink = (role: UserRole) => {
     switch (role) {
       case "SUPER_ADMIN": return "/super-admin/dashboard";
-      case "MANAGER": return "/owner/dashboard";
+      case "MANAGER": return "/manager/dashboard";
       case "CUSTOMER": return "/customer/profile";
       case "KITCHEN": return "/kitchen";
       case "WAITER": return "/waiter";
@@ -78,7 +78,7 @@ export function PublicNavbar() {
           ) : (
             <>
               <Link
-                href="/owner/register"
+                href="/manager/register"
                 className="flex items-center gap-1.5 rounded-xl border border-primary/40 bg-primary/10 px-3.5 py-2 text-xs font-extrabold text-primary hover:bg-primary hover:text-white transition-all active:scale-95 shadow-xs"
               >
                 <Building2 size={15} />

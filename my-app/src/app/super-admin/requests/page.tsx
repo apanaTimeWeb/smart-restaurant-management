@@ -28,7 +28,7 @@ export default function RequestsPage() {
       type: "HOTEL_REGISTRATION_NEW", // Using generic type for now
       title: "Hotel Approved! 🎉",
       message: `Your hotel "${tenant.restaurantName}" is approved. Please proceed to payment.`,
-      route: "/owner/dashboard",
+      route: "/manager/dashboard",
       playSound: true,
       soundType: "READY",
     });
