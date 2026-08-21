@@ -31,9 +31,9 @@ export default function AdminDashboardPage() {
     setIsMounted(true);
   }, []);
 
-  // Bounce HOTEL_OWNER to owner dashboard if their hotel is not ACTIVE
+  // Bounce MANAGER to owner dashboard if their hotel is not ACTIVE
   useEffect(() => {
-    if (authHydrated && currentUser && currentUser.role === "HOTEL_OWNER") {
+    if (authHydrated && currentUser && currentUser.role === "MANAGER") {
       const ownerTenants = getTenantsByOwner(currentUser.id, currentUser.phone || undefined);
       const activeTenant = ownerTenants.find(t => t.status === "ACTIVE");
       if (!activeTenant) {
@@ -62,7 +62,7 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <AuthGuard allowedRoles={["ADMIN", "HOTEL_OWNER"]}>
+    <AuthGuard allowedRoles={["ADMIN", "MANAGER"]}>
       <div className="rounded-xl border border-primary/20 bg-white/10 backdrop-blur-lg p-6 shadow-lg flex flex-col gap-6">
         <AdminPageHeader />
 

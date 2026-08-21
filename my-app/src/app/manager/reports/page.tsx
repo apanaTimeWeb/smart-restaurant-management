@@ -1,27 +1,27 @@
 ﻿"use client";
 
-// RESPONSIBILITY: AdminReports & Analytics page shell.
-// Composes AdminReportsSummaryCards + AdminReportsRevenueChart + AdminReportsTopItemsTable.
-// All data logic delegated to useAdminReports hook.
+// RESPONSIBILITY: OwnerReports & Analytics page shell.
+// Composes OwnerReportsSummaryCards + OwnerReportsRevenueChart + OwnerReportsTopItemsTable.
+// All data logic delegated to useOwnerReports hook.
 // isMounted guard prevents SSR/client hydration mismatch.
-// DATA FLOW: useAdminReports â†’ summary + topItems + dailyRevenue
-//            â†’ AdminReportsSummaryCards + AdminReportsRevenueChart + AdminReportsTopItemsTable â†’ UI
+// DATA FLOW: useOwnerReports â†’ summary + topItems + dailyRevenue
+//            â†’ OwnerReportsSummaryCards + OwnerReportsRevenueChart + OwnerReportsTopItemsTable â†’ UI
 
 import { useState, useEffect } from "react";
 import { Download } from "lucide-react";
-import { useAdminReports } from "@/app/admin/reports/admin_reports_hooks/useAdminReports";
-import { AdminReportsSummaryCards } from "@/app/admin/reports/admin_reports_components/AdminReportsSummaryCards";
-import { AdminReportsRevenueChart } from "@/app/admin/reports/admin_reports_components/AdminReportsRevenueChart";
-import { AdminReportsTopItemsTable } from "@/app/admin/reports/admin_reports_components/AdminReportsTopItemsTable";
+import { useOwnerReports } from "@/app/manager/reports/owner_reports_hooks/useOwnerReports";
+import { OwnerReportsSummaryCards } from "@/app/manager/reports/owner_reports_components/OwnerReportsSummaryCards";
+import { OwnerReportsRevenueChart } from "@/app/manager/reports/owner_reports_components/OwnerReportsRevenueChart";
+import { OwnerReportsTopItemsTable } from "@/app/manager/reports/owner_reports_components/OwnerReportsTopItemsTable";
 import { AuthGuard } from "@/app/auth/auth_components/AuthGuard";
-import type { AdminReportsPeriod } from "@/app/admin/reports/admin_reports_types/AdminReportsTypes";
+import type { OwnerReportsPeriod } from "@/app/manager/reports/owner_reports_types/OwnerReportsTypes";
 
 // â”€â”€â”€ Constants (Rule 35: No magic strings) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-const PAGE_TITLE    = "AdminReports & Analytics"                    as const;
+const PAGE_TITLE    = "OwnerReports & Analytics"                    as const;
 const PAGE_SUBTITLE = "Sales performance and revenue insights" as const;
 
-const PERIOD_TABS: { label: string; value: AdminReportsPeriod }[] = [
+const PERIOD_TABS: { label: string; value: OwnerReportsPeriod }[] = [
   { label: "Today",      value: "TODAY" },
   { label: "This Week",  value: "WEEK"  },
   { label: "This Month", value: "MONTH" },
@@ -30,7 +30,7 @@ const PERIOD_TABS: { label: string; value: AdminReportsPeriod }[] = [
 
 // â”€â”€â”€ Main Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-export default function AdminReportsPage() {
+export default function OwnerReportsPage() {
   // isMounted guard â€” prevents SSR/client hydration mismatch
   // Deps: [] â€” run once on mount only
   const [isMounted, setIsMounted] = useState(false);
@@ -40,13 +40,13 @@ export default function AdminReportsPage() {
   }, []);
 
   // Rule 6: All data + calculation logic in hook â€” page is pure shell
-  const { summary, topItems, dailyRevenue, period, customDate, setPeriod, setCustomDate, exportCsv } = useAdminReports();
+  const { summary, topItems, dailyRevenue, period, customDate, setPeriod, setCustomDate, exportCsv } = useOwnerReports();
 
   // â”€â”€ Skeleton â€” shown before client mounts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   if (!isMounted) {
     return (
       <div className="flex flex-col gap-6">
-        <AdminReportsPageHeader
+        <OwnerReportsPageHeader
           period={period}
           customDate={customDate}
           onPeriodChange={setPeriod}
@@ -68,7 +68,7 @@ export default function AdminReportsPage() {
   return (
     <AuthGuard allowedRoles={["ADMIN", "CASHIER", "MANAGER"]}>
       <div className="flex flex-col gap-6">
-        <AdminReportsPageHeader
+        <OwnerReportsPageHeader
           period={period}
           customDate={customDate}
           onPeriodChange={setPeriod}
@@ -77,13 +77,13 @@ export default function AdminReportsPage() {
         />
 
         {/* KPI Summary Cards */}
-        <AdminReportsSummaryCards summary={summary} />
+        <OwnerReportsSummaryCards summary={summary} />
 
         {/* Revenue Trend Chart â€” last 30 days (always full range) */}
-        <AdminReportsRevenueChart dailyRevenue={dailyRevenue} />
+        <OwnerReportsRevenueChart dailyRevenue={dailyRevenue} />
 
         {/* Top Items Table â€” scoped to selected period */}
-        <AdminReportsTopItemsTable topItems={topItems} />
+        <OwnerReportsTopItemsTable topItems={topItems} />
       </div>
     </AuthGuard>
   );
@@ -92,21 +92,21 @@ export default function AdminReportsPage() {
 // â”€â”€â”€ Sub-components â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 // RESPONSIBILITY: Page header with title, period tabs, custom date picker, and Export CSV button.
-interface AdminReportsPageHeaderProps {
-  period: AdminReportsPeriod;
+interface OwnerReportsPageHeaderProps {
+  period: OwnerReportsPeriod;
   customDate: string;
-  onPeriodChange: (p: AdminReportsPeriod) => void;
+  onPeriodChange: (p: OwnerReportsPeriod) => void;
   onCustomDateChange: (d: string) => void;
   onExport: () => void;
 }
 
-function AdminReportsPageHeader({
+function OwnerReportsPageHeader({
   period,
   customDate,
   onPeriodChange,
   onCustomDateChange,
   onExport,
-}: AdminReportsPageHeaderProps) {
+}: OwnerReportsPageHeaderProps) {
   return (
     <div className="flex flex-col gap-4">
       {/* Title row */}

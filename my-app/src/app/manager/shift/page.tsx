@@ -1,20 +1,20 @@
 "use client";
 
-// RESPONSIBILITY: Admin Shift Management page shell.
+// RESPONSIBILITY: Owner Shift Management page shell.
 // If shift OPEN: shows current stats + Close Shift form.
 // If shift CLOSED or null: shows Open Shift form + Z-Report (if closed).
-// DATA FLOW: useAdminShift → AdminShiftReport + RHF forms → UI
+// DATA FLOW: useOwnerShift → OwnerShiftReport + RHF forms → UI
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Loader2 } from "lucide-react";
-import { useCashierShift } from "@/app/cashier/cashier_hooks/useCashierShift";
-import { CashierShiftReport } from "@/app/cashier/cashier_components/CashierShiftReport";
+import { useOwnerShift } from "@/app/manager/manager_hooks/useOwnerShift";
+import { OwnerShiftReport } from "@/app/manager/manager_components/OwnerShiftReport";
 import { formatCurrency, formatDateTime } from "@/lib/formatters";
 import { AuthGuard } from "@/app/auth/auth_components/AuthGuard";
-import type { CashierShiftOpenFormValues, CashierShiftCloseFormValues } from "@/app/cashier/cashier_types/CashierTypes";
+import type { OwnerShiftOpenFormValues, OwnerShiftCloseFormValues } from "@/app/manager/manager_types/OwnerTypes";
 
 // ─── Constants (Rule 35: No magic strings) ────────────────────────────────────
 
@@ -42,9 +42,9 @@ function OpenShiftForm({
   isSubmitting: boolean;
 }) {
   const { register, handleSubmit, formState: { errors } } =
-    useForm<CashierShiftOpenFormValues>({ resolver: zodResolver(openSchema), defaultValues: { openingCash: 0 } });
+    useForm<OwnerShiftOpenFormValues>({ resolver: zodResolver(openSchema), defaultValues: { openingCash: 0 } });
 
-  function onSubmit(values: CashierShiftOpenFormValues) {
+  function onSubmit(values: OwnerShiftOpenFormValues) {
     onOpen(values.openingCash);
   }
 
@@ -86,9 +86,9 @@ function CloseShiftForm({
 }) {
   const [confirmed, setConfirmed] = useState(false);
   const { register, handleSubmit, formState: { errors } } =
-    useForm<CashierShiftCloseFormValues>({ resolver: zodResolver(closeSchema), defaultValues: { closingCash: 0 } });
+    useForm<OwnerShiftCloseFormValues>({ resolver: zodResolver(closeSchema), defaultValues: { closingCash: 0 } });
 
-  function onSubmit(values: CashierShiftCloseFormValues) {
+  function onSubmit(values: OwnerShiftCloseFormValues) {
     onClose(values.closingCash);
   }
 
@@ -142,13 +142,13 @@ function CloseShiftForm({
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
-export default function CashierShiftPage() {
+export default function OwnerShiftPage() {
   const [isMounted, setIsMounted] = useState(false);
 
   // Deps: [] — run once on mount only
   useEffect(() => { setIsMounted(true); }, []);
 
-  const { shift, isOpen, isSubmitting, salesHistory, openShift, closeShift } = useCashierShift();
+  const { shift, isOpen, isSubmitting, salesHistory, openShift, closeShift } = useOwnerShift();
 
   if (!isMounted) {
     return (
@@ -190,7 +190,7 @@ export default function CashierShiftPage() {
               <p className="text-[12px] font-semibold uppercase tracking-wide text-text-secondary">
                 Last Shift Z-Report
               </p>
-              <CashierShiftReport shift={shift} salesHistory={salesHistory} />
+              <OwnerShiftReport shift={shift} salesHistory={salesHistory} />
             </div>
           </>
         )}
@@ -201,7 +201,7 @@ export default function CashierShiftPage() {
             <p className="text-[12px] font-semibold uppercase tracking-wide text-text-secondary">
               Live Shift Report
             </p>
-            <CashierShiftReport shift={shift} salesHistory={salesHistory} />
+            <OwnerShiftReport shift={shift} salesHistory={salesHistory} />
           </div>
         )}
       </div>

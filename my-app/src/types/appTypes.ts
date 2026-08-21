@@ -35,7 +35,7 @@ export type ShiftStatus = "OPEN" | "CLOSED";
 
 export type ReservationStatus = "CONFIRMED" | "CANCELLED";
 
-export type UserRole = "SUPER_ADMIN" | "HOTEL_OWNER" | "ADMIN" | "CUSTOMER" | "WAITER" | "CASHIER" | "KITCHEN";
+export type UserRole = "SUPER_ADMIN" | "MANAGER" | "ADMIN" | "CUSTOMER" | "WAITER" | "CASHIER" | "KITCHEN";
 
 export type CourseType = "DRINKS" | "STARTERS" | "MAIN_COURSE" | "DESSERTS" | "OTHER";
 

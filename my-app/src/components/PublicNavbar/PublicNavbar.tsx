@@ -14,7 +14,7 @@ export function PublicNavbar() {
   const getDashboardLink = (role: UserRole) => {
     switch (role) {
       case "SUPER_ADMIN": return "/super-admin/dashboard";
-      case "HOTEL_OWNER": return "/owner/dashboard";
+      case "MANAGER": return "/owner/dashboard";
       case "CUSTOMER": return "/customer/profile";
       case "KITCHEN": return "/kitchen";
       case "WAITER": return "/waiter";
@@ -26,7 +26,7 @@ export function PublicNavbar() {
   const getRoleDisplayName = (role: UserRole) => {
     switch (role) {
       case "SUPER_ADMIN": return "Super Admin";
-      case "HOTEL_OWNER": return "Hotel Owner";
+      case "MANAGER": return "Hotel Owner";
       case "CASHIER": return "Cashier";
       case "WAITER": return "Waiter";
       case "KITCHEN": return "Kitchen Staff";

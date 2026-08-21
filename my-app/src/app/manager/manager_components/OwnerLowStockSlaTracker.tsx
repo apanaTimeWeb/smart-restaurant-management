@@ -1,7 +1,7 @@
 "use client";
 
-// RESPONSIBILITY: Live 24-Hour SLA Low Stock Escalation Tracker & Strict Cashier Warning System for Admin.
-// DATA FLOW: app_stock_alerts -> AdminLowStockSlaTracker -> 24h SLA Countdown / CRITICAL RED Badge / Send Strict Warning
+// RESPONSIBILITY: Live 24-Hour SLA Low Stock Escalation Tracker & Strict Cashier Warning System for Owner.
+// DATA FLOW: app_stock_alerts -> OwnerLowStockSlaTracker -> 24h SLA Countdown / CRITICAL RED Badge / Send Strict Warning
 
 import React, { useState, useEffect } from "react";
 import { AlertTriangle, ShieldAlert, Send, Clock, CheckCircle2, AlertOctagon } from "lucide-react";
@@ -13,7 +13,7 @@ import type { AppLowStockAlert, AppNotification } from "@/types/appTypes";
 
 const SLA_DURATION_MS = 24 * 60 * 60 * 1000; // 24 Hours in ms
 
-export function AdminLowStockSlaTracker(): React.JSX.Element | null {
+export function OwnerLowStockSlaTracker(): React.JSX.Element | null {
   const [stockAlerts, setStockAlerts] = useLocalStorage<AppLowStockAlert[]>(STORAGE_KEYS.STOCK_ALERTS, []);
   const [, setNotifications] = useLocalStorage<AppNotification[]>(STORAGE_KEYS.NOTIFICATIONS, []);
   const [now, setNow] = useState<number>(Date.now());

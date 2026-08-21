@@ -350,7 +350,7 @@ const SEED_USERS: AppUser[] = [
     id: "usr-owner-01",
     username: "owner",
     passwordHash: "owner123",
-    role: "HOTEL_OWNER",
+    role: "MANAGER",
     name: "Vikram Mehta",
     phone: "9876543215",
     createdByAdmin: false,

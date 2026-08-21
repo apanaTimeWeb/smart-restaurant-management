@@ -76,7 +76,7 @@ export function HomeRoleAccessPanel(): React.JSX.Element {
               const IconComp = card.icon;
               const targetRoute =
                 card.role === "SUPER_ADMIN" ? "/super-admin/dashboard" :
-                card.role === "HOTEL_OWNER" ? "/owner/dashboard" :
+                card.role === "MANAGER" ? "/owner/dashboard" :
                 card.role === "ADMIN" ? "/admin/dashboard" :
                 card.role === "CASHIER" ? "/billing" :
                 card.role === "WAITER" ? "/waiter" :

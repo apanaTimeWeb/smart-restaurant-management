@@ -2,7 +2,7 @@
 
 // RESPONSIBILITY: Unified User & Partner Registration page (`/auth/register`).
 // Allows users to select their account role via tab toggle:
-// 👤 Customer / Guest User (CUSTOMER) vs 🏨 Hotel / Restaurant Owner (HOTEL_OWNER).
+// 👤 Customer / Guest User (CUSTOMER) vs 🏨 Hotel / Restaurant Owner (MANAGER).
 // DATA FLOW: /auth/register -> useAuth.login() -> Role Dashboard Redirect
 
 import React, { useState, Suspense } from "react";
@@ -26,9 +26,9 @@ function UnifiedRegisterPageContent(): React.JSX.Element {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") || "";
-  const { login, signupHotelOwner, signupCustomer } = useAuth();
+  const { login, signupManager, signupCustomer } = useAuth();
 
-  const [selectedRole, setSelectedRole] = useState<UserRole>("HOTEL_OWNER");
+  const [selectedRole, setSelectedRole] = useState<UserRole>("MANAGER");
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -49,8 +49,8 @@ function UnifiedRegisterPageContent(): React.JSX.Element {
     setErrorMessage(null);
 
     let result;
-    if (selectedRole === "HOTEL_OWNER") {
-      result = signupHotelOwner(formData.name, formData.phone, formData.email, formData.password);
+    if (selectedRole === "MANAGER") {
+      result = signupManager(formData.name, formData.phone, formData.email, formData.password);
     } else {
       result = signupCustomer(formData.name, formData.phone, formData.email, formData.password);
     }
@@ -64,7 +64,7 @@ function UnifiedRegisterPageContent(): React.JSX.Element {
     setTimeout(() => {
       if (redirect) {
         router.push(redirect);
-      } else if (selectedRole === "HOTEL_OWNER") {
+      } else if (selectedRole === "MANAGER") {
         router.push("/owner/dashboard");
       } else {
         router.push("/");
@@ -98,9 +98,9 @@ function UnifiedRegisterPageContent(): React.JSX.Element {
         <div className="grid grid-cols-2 gap-2 p-1.5 rounded-2xl bg-surface border border-border/60 mb-6">
           <button
             type="button"
-            onClick={() => setSelectedRole("HOTEL_OWNER")}
+            onClick={() => setSelectedRole("MANAGER")}
             className={`flex items-center justify-center gap-2 rounded-xl py-2.5 px-3 text-xs font-extrabold transition-all ${
-              selectedRole === "HOTEL_OWNER"
+              selectedRole === "MANAGER"
                 ? "bg-primary text-white shadow-md"
                 : "text-text-secondary hover:text-text-primary"
             }`}
@@ -141,7 +141,7 @@ function UnifiedRegisterPageContent(): React.JSX.Element {
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                placeholder={selectedRole === "HOTEL_OWNER" ? "e.g. Rajesh Sharma" : "e.g. Vikram Sethi"}
+                placeholder={selectedRole === "MANAGER" ? "e.g. Rajesh Sharma" : "e.g. Vikram Sethi"}
                 className="w-full rounded-xl border border-border bg-input py-2.5 pl-10 pr-4 text-xs text-text-primary focus:border-primary focus:outline-none"
               />
             </div>
@@ -201,14 +201,14 @@ function UnifiedRegisterPageContent(): React.JSX.Element {
             type="submit"
             disabled={isSubmitting}
             className={`mt-2 flex w-full items-center justify-center gap-2 rounded-2xl py-3.5 font-black text-xs text-white shadow-xl transition-all active:scale-95 disabled:opacity-50 ${
-              selectedRole === "HOTEL_OWNER" ? "bg-primary hover:bg-primary/90" : "bg-emerald-500 hover:bg-emerald-600"
+              selectedRole === "MANAGER" ? "bg-primary hover:bg-primary/90" : "bg-emerald-500 hover:bg-emerald-600"
             }`}
           >
             {isSubmitting ? (
-              <span>Creating {selectedRole === "HOTEL_OWNER" ? "Owner" : "User"} Account…</span>
+              <span>Creating {selectedRole === "MANAGER" ? "Owner" : "User"} Account…</span>
             ) : (
               <>
-                <span>Register as {selectedRole === "HOTEL_OWNER" ? "Hotel Owner" : "Customer / User"}</span>
+                <span>Register as {selectedRole === "MANAGER" ? "Hotel Owner" : "Customer / User"}</span>
                 <ArrowRight size={16} />
               </>
             )}

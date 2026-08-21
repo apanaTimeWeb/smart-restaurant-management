@@ -17,7 +17,7 @@ import { AUTH_DEFAULT_REDIRECT_ROUTES, AUTH_ERRORS, AUTH_SUCCESS } from "@/app/a
   const setActiveTenantIdForUser = (user: AppUser) => {
     if (typeof window === "undefined") return;
     let tid = "";
-    if (user.role === "HOTEL_OWNER") {
+    if (user.role === "MANAGER") {
       try {
         const raw = window.localStorage.getItem(STORAGE_KEYS.SAAS_TENANTS);
         if (raw) {
@@ -280,7 +280,7 @@ export function useAuth(): UseAuthReturn {
   /**
    * Hotel Owner Registration with Strict Duplicate Email & Phone Validation
    */
-  const signupHotelOwner = useCallback(
+  const signupManager = useCallback(
     (name: string, phone: string, email: string, passwordHash: string): { success: boolean; message: string; user?: AppUser } => {
       if (!name || !phone || !passwordHash) {
         return { success: false, message: AUTH_ERRORS.REQUIRED_FIELDS };
@@ -309,7 +309,7 @@ export function useAuth(): UseAuthReturn {
         id: `usr-owner-${Date.now()}`,
         username: trimmedPhone,
         passwordHash,
-        role: "HOTEL_OWNER",
+        role: "MANAGER",
         name: name.trim(),
         phone: trimmedPhone,
         email: trimmedEmail || undefined,
@@ -361,7 +361,7 @@ export function useAuth(): UseAuthReturn {
     login,
     signupCustomer,
     signupAdmin,
-    signupHotelOwner,
+    signupManager,
     logout,
     hasRole,
   };

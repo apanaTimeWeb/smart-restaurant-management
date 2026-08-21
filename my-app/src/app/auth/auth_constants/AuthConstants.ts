@@ -5,7 +5,7 @@ import type { UserRole } from "@/types/appTypes";
 
 export const AUTH_DEFAULT_REDIRECT_ROUTES: Record<UserRole, string> = {
   SUPER_ADMIN: "/super-admin/dashboard",
-  HOTEL_OWNER: "/owner/dashboard",
+  MANAGER: "/owner/dashboard",
   ADMIN: "/admin/dashboard",
   CUSTOMER: "/customer",
   CASHIER: "/billing",

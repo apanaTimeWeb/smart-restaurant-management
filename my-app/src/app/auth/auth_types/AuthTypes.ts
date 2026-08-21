@@ -35,7 +35,7 @@ export interface UseAuthReturn {
   login: (username: string, passwordHash: string) => { success: boolean; message: string; user?: AppUser };
   signupCustomer: (name: string, phone: string, username: string, passwordHash: string) => { success: boolean; message: string; user?: AppUser };
   signupAdmin: (name: string, phone: string, username: string, passwordHash: string) => { success: boolean; message: string; user?: AppUser };
-  signupHotelOwner: (name: string, phone: string, email: string, passwordHash: string) => { success: boolean; message: string; user?: AppUser };
+  signupManager: (name: string, phone: string, email: string, passwordHash: string) => { success: boolean; message: string; user?: AppUser };
   logout: () => void;
   hasRole: (roles: AuthUserRole[]) => boolean;
 }

@@ -1,7 +1,7 @@
 import type { AppShellNavGroup } from "@/components/AppShell/AppShellTypes";
 
 import { ADMIN_ROUTES } from "@/app/admin/admin_url_config";
-import { OWNER_ROUTES } from "@/app/hotel-owner/hotel-owner_url_config";
+import { OWNER_ROUTES } from "@/app/manager/manager_url_config";
 import { CASHIER_ROUTES } from "@/app/cashier/cashier_url_config";
 import { WAITER_ROUTES } from "@/app/waiter/waiter_url_config";
 import { KITCHEN_ROUTES } from "@/app/kitchen/kitchen_url_config";
@@ -78,11 +78,11 @@ export const APP_SHELL_NAV_GROUPS: AppShellNavGroup[] = [
     groupLabel: null,
     items: [
       { id: "admin-dashboard", label: "Analytics Dashboard", href: APP_ROUTES.ADMIN_DASHBOARD, iconName: "BarChart3", allowedRoles: ["ADMIN"] },
-      { id: "owner-dashboard", label: "Analytics Dashboard", href: APP_ROUTES.OWNER_DASHBOARD, iconName: "BarChart3", allowedRoles: ["HOTEL_OWNER"] },
+      { id: "owner-dashboard", label: "Analytics Dashboard", href: APP_ROUTES.OWNER_DASHBOARD, iconName: "BarChart3", allowedRoles: ["MANAGER"] },
       { id: "super-admin", label: "Super Admin Portal", href: APP_ROUTES.SUPER_ADMIN, iconName: "ShieldCheck", allowedRoles: ["SUPER_ADMIN"] },
       
       { id: "admin-reports", label: "Reports & Analytics", href: APP_ROUTES.ADMIN_REPORTS, iconName: "PieChart", allowedRoles: ["ADMIN"] },
-      { id: "owner-reports", label: "Reports & Analytics", href: APP_ROUTES.OWNER_REPORTS, iconName: "PieChart", allowedRoles: ["HOTEL_OWNER"] },
+      { id: "owner-reports", label: "Reports & Analytics", href: APP_ROUTES.OWNER_REPORTS, iconName: "PieChart", allowedRoles: ["MANAGER"] },
     ],
   },
   {
@@ -104,7 +104,7 @@ export const APP_SHELL_NAV_GROUPS: AppShellNavGroup[] = [
     groupLabel: "Tables & Reservations",
     items: [
       { id: "admin-reservations", label: "Advance Reservations", href: APP_ROUTES.ADMIN_RESERVATIONS, iconName: "CalendarCheck", allowedRoles: ["ADMIN"] },
-      { id: "owner-reservations", label: "Advance Reservations", href: APP_ROUTES.OWNER_RESERVATIONS, iconName: "CalendarCheck", allowedRoles: ["HOTEL_OWNER"] },
+      { id: "owner-reservations", label: "Advance Reservations", href: APP_ROUTES.OWNER_RESERVATIONS, iconName: "CalendarCheck", allowedRoles: ["MANAGER"] },
       { id: "waiter-reservations", label: "Advance Reservations", href: APP_ROUTES.WAITER_RESERVATIONS, iconName: "CalendarCheck", allowedRoles: ["WAITER"] },
       { id: "customer-reservations", label: "My Reservations", href: APP_ROUTES.CUSTOMER_RESERVATIONS, iconName: "CalendarCheck", allowedRoles: ["CUSTOMER"] },
     ],
@@ -113,43 +113,43 @@ export const APP_SHELL_NAV_GROUPS: AppShellNavGroup[] = [
     groupLabel: "Inventory & Menu",
     items: [
       { id: "admin-menu", label: "Menu & Item Master", href: APP_ROUTES.ADMIN_MENU, iconName: "UtensilsCrossed", allowedRoles: ["ADMIN"] },
-      { id: "owner-menu", label: "Menu & Item Master", href: APP_ROUTES.OWNER_MENU, iconName: "UtensilsCrossed", allowedRoles: ["HOTEL_OWNER"] },
+      { id: "owner-menu", label: "Menu & Item Master", href: APP_ROUTES.OWNER_MENU, iconName: "UtensilsCrossed", allowedRoles: ["MANAGER"] },
       { id: "kitchen-menu", label: "Menu & Item Master", href: APP_ROUTES.KITCHEN_MENU, iconName: "UtensilsCrossed", allowedRoles: ["KITCHEN"] },
       
       { id: "admin-inventory", label: "Stock Inventory", href: APP_ROUTES.ADMIN_INVENTORY, iconName: "Package", allowedRoles: ["ADMIN"] },
-      { id: "owner-inventory", label: "Stock Inventory", href: APP_ROUTES.OWNER_INVENTORY, iconName: "Package", allowedRoles: ["HOTEL_OWNER"] },
+      { id: "owner-inventory", label: "Stock Inventory", href: APP_ROUTES.OWNER_INVENTORY, iconName: "Package", allowedRoles: ["MANAGER"] },
       { id: "kitchen-inventory", label: "Stock Inventory", href: APP_ROUTES.KITCHEN_INVENTORY, iconName: "Package", allowedRoles: ["KITCHEN"] },
       
       { id: "admin-coupons", label: "Coupons & Discounts", href: APP_ROUTES.ADMIN_COUPONS, iconName: "Tag", allowedRoles: ["ADMIN"] },
-      { id: "owner-coupons", label: "Coupons & Discounts", href: APP_ROUTES.OWNER_COUPONS, iconName: "Tag", allowedRoles: ["HOTEL_OWNER"] },
+      { id: "owner-coupons", label: "Coupons & Discounts", href: APP_ROUTES.OWNER_COUPONS, iconName: "Tag", allowedRoles: ["MANAGER"] },
     ],
   },
   {
     groupLabel: "Admin & System",
     items: [
       { id: "admin-settings", label: "Restaurant Settings", href: APP_ROUTES.ADMIN_SETTINGS, iconName: "Sliders", allowedRoles: ["ADMIN"] },
-      { id: "owner-settings", label: "Restaurant Settings", href: APP_ROUTES.OWNER_SETTINGS, iconName: "Sliders", allowedRoles: ["HOTEL_OWNER"] },
+      { id: "owner-settings", label: "Restaurant Settings", href: APP_ROUTES.OWNER_SETTINGS, iconName: "Sliders", allowedRoles: ["MANAGER"] },
       
       { id: "admin-staff", label: "Staff Management", href: APP_ROUTES.ADMIN_STAFF, iconName: "Users", allowedRoles: ["ADMIN"] },
-      { id: "owner-staff", label: "Staff Management", href: APP_ROUTES.OWNER_STAFF, iconName: "Users", allowedRoles: ["HOTEL_OWNER"] },
+      { id: "owner-staff", label: "Staff Management", href: APP_ROUTES.OWNER_STAFF, iconName: "Users", allowedRoles: ["MANAGER"] },
       
-      { id: "owner-credentials", label: "Staff Credentials", href: APP_ROUTES.OWNER_CREDENTIALS, iconName: "Key", allowedRoles: ["HOTEL_OWNER"] },
+      { id: "owner-credentials", label: "Staff Credentials", href: APP_ROUTES.OWNER_CREDENTIALS, iconName: "Key", allowedRoles: ["MANAGER"] },
       
       { id: "admin-audit", label: "Permissions & Audit Logs", href: APP_ROUTES.ADMIN_AUDIT, iconName: "ShieldCheck", allowedRoles: ["ADMIN"] },
-      { id: "owner-audit", label: "Permissions & Audit Logs", href: APP_ROUTES.OWNER_AUDIT, iconName: "ShieldCheck", allowedRoles: ["HOTEL_OWNER"] },
+      { id: "owner-audit", label: "Permissions & Audit Logs", href: APP_ROUTES.OWNER_AUDIT, iconName: "ShieldCheck", allowedRoles: ["MANAGER"] },
       
       { id: "admin-shift", label: "Shift & Day-Close", href: APP_ROUTES.ADMIN_SHIFT, iconName: "Timer", allowedRoles: ["ADMIN"] },
-      { id: "owner-shift", label: "Shift & Day-Close", href: APP_ROUTES.OWNER_SHIFT, iconName: "Timer", allowedRoles: ["HOTEL_OWNER"] },
+      { id: "owner-shift", label: "Shift & Day-Close", href: APP_ROUTES.OWNER_SHIFT, iconName: "Timer", allowedRoles: ["MANAGER"] },
       { id: "cashier-shift", label: "Shift & Day-Close", href: APP_ROUTES.CASHIER_SHIFT, iconName: "Timer", allowedRoles: ["CASHIER"] },
       
       { id: "admin-backup", label: "Data Backup & Restore", href: APP_ROUTES.ADMIN_BACKUP, iconName: "HardDrive", allowedRoles: ["ADMIN"] },
-      { id: "owner-backup", label: "Data Backup & Restore", href: APP_ROUTES.OWNER_BACKUP, iconName: "HardDrive", allowedRoles: ["HOTEL_OWNER"] },
+      { id: "owner-backup", label: "Data Backup & Restore", href: APP_ROUTES.OWNER_BACKUP, iconName: "HardDrive", allowedRoles: ["MANAGER"] },
       
       { id: "admin-qr-gen", label: "Table QR Generator", href: APP_ROUTES.ADMIN_QR, iconName: "QrCode", allowedRoles: ["ADMIN"] },
-      { id: "owner-qr-gen", label: "Table QR Generator", href: APP_ROUTES.OWNER_QR, iconName: "QrCode", allowedRoles: ["HOTEL_OWNER"] },
+      { id: "owner-qr-gen", label: "Table QR Generator", href: APP_ROUTES.OWNER_QR, iconName: "QrCode", allowedRoles: ["MANAGER"] },
       
       { id: "admin-list-hotel", label: "List Your Hotel", href: APP_ROUTES.ADMIN_LIST_HOTEL, iconName: "MapPin", allowedRoles: ["ADMIN"] },
-      { id: "owner-list-hotel", label: "List Your Hotel", href: APP_ROUTES.OWNER_LIST_HOTEL, iconName: "MapPin", allowedRoles: ["HOTEL_OWNER"] },
+      { id: "owner-list-hotel", label: "List Your Hotel", href: APP_ROUTES.OWNER_LIST_HOTEL, iconName: "MapPin", allowedRoles: ["MANAGER"] },
     ],
   },
   // ================= SUPER ADMIN =================
