@@ -24,7 +24,9 @@ super-admin/
 ├── audit/                         # System access and security logs
 ├── backup/                        # Global platform data backups
 ├── billing/                       # SaaS billing and invoicing for managers
+├── branding/                      # Platform white-labeling and themes
 ├── broadcasts/                    # Push global in-app announcements
+├── communications/                # Logs for all sent Emails, SMS, WhatsApp
 ├── coupons/                       # Global discount codes for SaaS subscriptions
 ├── dashboard/                     # High-level analytics overview and KPIs
 ├── data/                          # Bulk exports and data management
@@ -35,6 +37,7 @@ super-admin/
 ├── migrations/                    # Track schema rollouts across tenant databases
 ├── payments/                      # Payment gateway integrations & tracking
 ├── requests/                      # Incoming client requests or support tickets
+├── security/                      # Global security, IP whitelisting, 2FA policies
 ├── settings/                      # Global system settings & preferences
 ├── subscriptions/                 # SaaS subscription tier management
 ├── system/                        # Monitor global uptime and API statuses
@@ -50,7 +53,9 @@ The following features exist inside this module. Each contains its own page.tsx 
 - **/audit**: Tracks system access, permission changes, and security logs for transparency and compliance.
 - **/backup**: Global platform data backups and disaster recovery controls.
 - **/billing**: SaaS billing and invoicing for managers subscribing to the platform.
+- **/branding**: Manage white-labeling, custom domains, and platform themes for enterprise clients.
 - **/broadcasts**: Push global in-app announcements to all restaurant managers.
+- **/communications**: Master log for debugging all sent Emails, SMS, and WhatsApp messages.
 - **/coupons**: Manage global discount codes for SaaS subscriptions.
 - **/dashboard**: High-level analytics overview, displaying key performance indicators (KPIs) like daily revenue, top items, and live operations.
 - **/data**: Data management controls, including backups, restores, and bulk exports of system records.
@@ -61,6 +66,7 @@ The following features exist inside this module. Each contains its own page.tsx 
 - **/migrations**: Track schema rollouts across tenant databases.
 - **/payments**: Global payment gateway integrations and settlement tracking.
 - **/requests**: Incoming requests from potential clients or support tickets from existing owners.
+- **/security**: Manage global platform security, IP whitelisting, and 2FA policies.
 - **/settings**: System and restaurant settings, configuring tax rates, operational hours, receipt formats, and general preferences.
 - **/subscriptions**: SaaS subscription tier management, defining feature access based on pricing plans.
 - **/system**: Monitor global uptime and third-party API statuses.

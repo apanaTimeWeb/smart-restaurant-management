@@ -20,4 +20,7 @@ export const SUPER_ADMIN_ROUTES = {
   JOBS: "/super-admin/jobs",
   MIGRATIONS: "/super-admin/migrations",
   TICKETS: "/super-admin/tickets",
+  SECURITY: "/super-admin/security",
+  COMMUNICATIONS: "/super-admin/communications",
+  BRANDING: "/super-admin/branding",
 } as const;
