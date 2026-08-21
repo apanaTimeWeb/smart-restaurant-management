@@ -1,4 +1,4 @@
-﻿# Hotel-Owner Features & Architecture Documentation
+# Manager Features & Architecture Documentation
 
 ## Overview
 This module is strictly isolated to the **manager** role in the Smart Restaurant Management system. In accordance with the project's **Total Role Isolation** architecture, this folder contains all pages, components, hooks, and types specifically built for the manager. This prevents cross-role bugs and AI hallucinations by isolating role-specific UI and logic.

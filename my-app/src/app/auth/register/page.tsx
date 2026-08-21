@@ -106,7 +106,7 @@ function UnifiedRegisterPageContent(): React.JSX.Element {
             }`}
           >
             <Building2 size={16} />
-            <span>Hotel Owner</span>
+            <span>Manager</span>
           </button>
 
           <button
@@ -205,10 +205,10 @@ function UnifiedRegisterPageContent(): React.JSX.Element {
             }`}
           >
             {isSubmitting ? (
-              <span>Creating {selectedRole === "MANAGER" ? "Owner" : "User"} Account…</span>
+              <span>Creating {selectedRole === "MANAGER" ? "Manager" : "User"} Account…</span>
             ) : (
               <>
-                <span>Register as {selectedRole === "MANAGER" ? "Hotel Owner" : "Customer / User"}</span>
+                <span>Register as {selectedRole === "MANAGER" ? "Manager" : "Customer / User"}</span>
                 <ArrowRight size={16} />
               </>
             )}

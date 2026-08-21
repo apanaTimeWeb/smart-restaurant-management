@@ -278,7 +278,7 @@ export function useAuth(): UseAuthReturn {
   );
 
   /**
-   * Hotel Owner Registration with Strict Duplicate Email & Phone Validation
+   * Manager Registration with Strict Duplicate Email & Phone Validation
    */
   const signupManager = useCallback(
     (name: string, phone: string, email: string, passwordHash: string): { success: boolean; message: string; user?: AppUser } => {
@@ -321,13 +321,13 @@ export function useAuth(): UseAuthReturn {
       const updatedUsers = [...users, newOwner];
       saveUsers(updatedUsers);
 
-      // Auto-login newly registered Hotel Owner with isolated session
+      // Auto-login newly registered Manager with isolated session
       setCurrentUser(newOwner);
       if (typeof window !== "undefined") {
         window.localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(newOwner)); setActiveTenantIdForUser(newOwner);
       }
 
-      return { success: true, message: "Hotel Owner account created successfully!", user: newOwner };
+      return { success: true, message: "Manager account created successfully!", user: newOwner };
     },
     [getUsers, saveUsers]
   );

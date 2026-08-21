@@ -1,4 +1,4 @@
-# Theme Portability Contract: HOTEL-OWNER
+# Theme Portability Contract: MANAGER
 
 This module is designed to be completely portable and theme-independent.
 

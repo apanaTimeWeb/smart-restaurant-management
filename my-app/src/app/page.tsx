@@ -1,9 +1,9 @@
-﻿"use client";
+"use client";
 
 // RESPONSIBILITY: Public City Marketplace & Multi-Tenant SaaS Landing Portal (`/`).
 // Allows customers to browse, search, and discover top restaurants by city & cuisine,
 // scan walk-in QR menus, or book advance tables with zero-wait pre-ordering.
-// Provides Hotel Owners direct CTA to register and onboard their restaurant.
+// Provides Managers direct CTA to register and onboard their restaurant.
 // DATA FLOW: tenantService -> localStorage (SAAS_TENANTS) -> City Marketplace -> UI
 
 import React, { useState, useEffect, useMemo } from "react";

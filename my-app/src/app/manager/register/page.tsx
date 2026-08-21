@@ -1,6 +1,6 @@
 "use client";
 
-// RESPONSIBILITY: Hotel Owner Registration page (`/owner/register`).
+// RESPONSIBILITY: Manager Registration page (`/manager/register`).
 // Allows new restaurant owners to create an account with Owner Name, Phone, Email, Password.
 // Automatically assigns UserRole: "MANAGER" and redirects to Onboarding Profile Wizard.
 // DATA FLOW: owner/register/page.tsx -> useAuth / registerUser -> owner/onboarding/page.tsx

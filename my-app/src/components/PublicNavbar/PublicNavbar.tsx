@@ -26,7 +26,7 @@ export function PublicNavbar() {
   const getRoleDisplayName = (role: UserRole) => {
     switch (role) {
       case "SUPER_ADMIN": return "Super Admin";
-      case "MANAGER": return "Hotel Owner";
+      case "MANAGER": return "Manager";
       case "CASHIER": return "Cashier";
       case "WAITER": return "Waiter";
       case "KITCHEN": return "Kitchen Staff";

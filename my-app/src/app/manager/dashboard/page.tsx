@@ -1,6 +1,6 @@
 "use client";
 
-// RESPONSIBILITY: Hotel Owner Tenant Dashboard (`/owner/dashboard`).
+// RESPONSIBILITY: Manager Tenant Dashboard (`/manager/dashboard`).
 // Displays "Create Your Restaurant" button when no hotel exists.
 // Hosts Create Hotel Modal, Approval Pending Tracker, Pay Subscription Button,
 // and Active POS Tenant Tools (Staff Creator, Menu Creator, Table Creator).
@@ -145,7 +145,7 @@ export default function OwnerDashboardPage() {
         bannerUrl: hotelForm.bannerUrl,
         ownerId: currentUser?.id,
         ownerPhone: currentUser?.phone || undefined,
-        ownerName: currentUser?.name || "Hotel Owner",
+        ownerName: currentUser?.name || "Manager",
       });
 
       // Dispatch Notification to Super Admin
@@ -266,7 +266,7 @@ export default function OwnerDashboardPage() {
             </div>
             <div>
               <h1 className="font-black text-2xl text-text-primary">
-                Hotel Owner Control Center
+                Manager Control Center
               </h1>
               <p className="text-xs text-text-secondary">
                 Manage restaurant profile, subscription payments, staff, menu items & dining tables

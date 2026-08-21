@@ -1,4 +1,4 @@
-﻿# Super-Admin Features & Architecture Documentation
+# Super-Admin Features & Architecture Documentation
 
 ## Overview
 This module is strictly isolated to the **super-admin** role in the Smart Restaurant Management system. In accordance with the project's **Total Role Isolation** architecture, this folder contains all pages, components, hooks, and types specifically built for the super-admin. This prevents cross-role bugs and AI hallucinations by isolating role-specific UI and logic.
@@ -14,7 +14,7 @@ The following features exist inside this module. Each contains its own page.tsx 
 - **/analytics**: Platform-wide analytics covering all registered hotels, gross transaction volumes, and subscription metrics.
 - **/audit**: Tracks system access, permission changes, and security logs for transparency and compliance.
 - **/backup**: Global platform data backups and disaster recovery controls.
-- **/billing**: SaaS billing and invoicing for hotel owners subscribing to the platform.
+- **/billing**: SaaS billing and invoicing for managers subscribing to the platform.
 - **/dashboard**: High-level analytics overview, displaying key performance indicators (KPIs) like daily revenue, top items, and live operations.
 - **/data**: Data management controls, including backups, restores, and bulk exports of system records.
 - **/hotels**: Global directory of all onboarded restaurants/hotels on the platform.
