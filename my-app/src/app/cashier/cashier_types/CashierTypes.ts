@@ -1,4 +1,4 @@
-﻿// RESPONSIBILITY: All TypeScript types for the Cashier POS module.
+// RESPONSIBILITY: All TypeScript types for the Cashier POS module.
 // No logic, no imports from other modules â€” pure type definitions only.
 // DATA FLOW: CashierTypes.ts â†’ imported by useCashierOrder, CashierTableSelector,
 //            CashierOrderSummary, cashier/page.tsx
@@ -225,3 +225,30 @@ export interface UseCashierOrderReturn {
   clearDiscount:        () => void;
   setLoyaltyRedeemed:   (amount: number) => void;
 }
+
+// ─── Shift Types ─────────────────────────────────────────────────────────────
+
+import type { AppShiftRegister, AppSalesRecord } from "@/types/appTypes";
+
+export interface CashierShiftOpenFormValues {
+  openingCash: number;
+}
+
+export interface CashierShiftCloseFormValues {
+  closingCash: number;
+}
+
+export interface UseCashierShiftReturn {
+  shift:        AppShiftRegister | null;
+  isOpen:       boolean;
+  isSubmitting: boolean;
+  salesHistory: AppSalesRecord[];
+  openShift:    (openingCash: number) => void;
+  closeShift:   (closingCash: number) => void;
+}
+
+export interface CashierShiftReportProps {
+  shift:        AppShiftRegister;
+  salesHistory: AppSalesRecord[];
+}
+

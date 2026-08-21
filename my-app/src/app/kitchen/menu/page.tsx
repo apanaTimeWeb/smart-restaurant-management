@@ -1,20 +1,20 @@
 "use client";
 
-// RESPONSIBILITY: Admin Menu & Item Master page shell.
+// RESPONSIBILITY: Kitchen Menu & Item Master page shell.
 // Two tabs: "Menu Items" and "Combos & Happy Hours".
-// "+ Add Item" button opens AdminMenuFormModal.
-// Wires useAdminMenu hook to AdminMenuTable, AdminMenuFormModal, AdminComboEditor.
-// DATA FLOW: useAdminMenu → AdminMenuTable + AdminMenuFormModal + AdminComboEditor → UI
+// "+ Add Item" button opens KitchenMenuFormModal.
+// Wires useKitchenMenu hook to KitchenMenuTable, KitchenMenuFormModal, KitchenComboEditor.
+// DATA FLOW: useKitchenMenu → KitchenMenuTable + KitchenMenuFormModal + KitchenComboEditor → UI
 
 import { useState, useEffect } from "react";
 import { Plus } from "lucide-react";
-import { useAdminMenu } from "@/app/admin/admin_hooks/useAdminMenu";
-import { AdminMenuTable } from "@/app/admin/admin_components/AdminMenuTable";
-import { AdminMenuFormModal } from "@/app/admin/admin_components/AdminMenuFormModal";
-import { AdminComboEditor } from "@/app/admin/admin_components/AdminComboEditor";
+import { useKitchenMenu } from "@/app/kitchen/kitchen_hooks/useKitchenMenu";
+import { KitchenMenuTable } from "@/app/kitchen/kitchen_components/KitchenMenuTable";
+import { KitchenMenuFormModal } from "@/app/kitchen/kitchen_components/KitchenMenuFormModal";
+import { KitchenComboEditor } from "@/app/kitchen/kitchen_components/KitchenComboEditor";
 import { AuthGuard } from "@/app/auth/auth_components/AuthGuard";
 import type { AppMenuItem } from "@/types/appTypes";
-import type { AdminMenuFormValues } from "@/app/admin/admin_types/AdminTypes";
+import type { KitchenMenuFormValues } from "@/app/kitchen/kitchen_types/KitchenTypes";
 
 // ─── Constants (Rule 35: No magic strings) ────────────────────────────────────
 
@@ -28,7 +28,7 @@ type ActiveTab = typeof TAB_MENU | typeof TAB_COMBOS;
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
-export default function AdminMenuPage() {
+export default function KitchenMenuPage() {
   // Hydration guard — prevents SSR/client mismatch
   const [isMounted, setIsMounted] = useState(false);
 
@@ -47,7 +47,7 @@ export default function AdminMenuPage() {
     updateCombo,
     deleteCombo,
     saveRecipe,
-  } = useAdminMenu();
+  } = useKitchenMenu();
 
   const [activeTab,   setActiveTab]   = useState<ActiveTab>(TAB_MENU);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -63,7 +63,7 @@ export default function AdminMenuPage() {
     setIsModalOpen(true);
   }
 
-  function handleModalSave(values: AdminMenuFormValues) {
+  function handleModalSave(values: KitchenMenuFormValues) {
     if (editItem) {
       updateMenuItem(editItem.id, values);
     } else {
@@ -118,7 +118,7 @@ export default function AdminMenuPage() {
 
         {/* Tab content */}
         {activeTab === TAB_MENU && (
-          <AdminMenuTable
+          <KitchenMenuTable
             menuItems={menuItems}
             onEdit={handleEditClick}
             onDelete={handleDeleteMenuItem}
@@ -127,7 +127,7 @@ export default function AdminMenuPage() {
         )}
 
         {activeTab === TAB_COMBOS && (
-          <AdminComboEditor
+          <KitchenComboEditor
             combos={combos}
             menuItems={menuItems}
             onAdd={addCombo}
@@ -137,7 +137,7 @@ export default function AdminMenuPage() {
         )}
 
         {/* Add/Edit modal */}
-        <AdminMenuFormModal
+        <KitchenMenuFormModal
           isOpen={isModalOpen}
           editItem={editItem}
           inventoryItems={inventoryItems}

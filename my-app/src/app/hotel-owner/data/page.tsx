@@ -1,12 +1,12 @@
 ﻿"use client";
 
-// RESPONSIBILITY: Admin Data Backup & Restore page shell.
-// Wires useAdminData hook to AdminDataPanel.
-// DATA FLOW: useAdminData → AdminDataPanel → UI
+// RESPONSIBILITY: Owner Data Backup & Restore page shell.
+// Wires useOwnerData hook to OwnerDataPanel.
+// DATA FLOW: useOwnerData → OwnerDataPanel → UI
 
 import { useEffect, useState } from "react";
-import { useAdminData } from "@/app/admin/admin_hooks/useAdminData";
-import { AdminDataPanel } from "@/app/admin/admin_components/AdminDataPanel";
+import { useOwnerData } from "@/app/hotel-owner/hotel-owner_hooks/useOwnerData";
+import { OwnerDataPanel } from "@/app/hotel-owner/hotel-owner_components/OwnerDataPanel";
 import { AuthGuard } from "@/app/auth/auth_components/AuthGuard";
 
 // ─── Constants (Rule 35: No magic strings) ────────────────────────────────────
@@ -16,7 +16,7 @@ const PAGE_SUBTITLE = "Export, import, and emergency reset system data"         
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
-export default function AdminDataPage() {
+export default function OwnerDataPage() {
   const [isMounted, setIsMounted] = useState(false);
 
   // Deps: [] — run once on mount only
@@ -30,7 +30,7 @@ export default function AdminDataPage() {
     exportBackup,
     importRestore,
     emergencyReset,
-  } = useAdminData();
+  } = useOwnerData();
 
   if (!isMounted) {
     return (
@@ -49,7 +49,7 @@ export default function AdminDataPage() {
     <AuthGuard allowedRoles={["HOTEL_OWNER"]}>
       <div className="flex flex-col gap-5">
         <DataPageHeader />
-        <AdminDataPanel
+        <OwnerDataPanel
           storageUsage={storageUsage}
           isExporting={isExporting}
           isImporting={isImporting}

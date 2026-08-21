@@ -3,7 +3,7 @@
 // DATA FLOW: KitchenTypes.ts → imported by KitchenKotCard, KitchenKotGrid,
 //            KitchenStatusPipeline, KitchenPrepTimeInput, useKitchenKds, kitchen/page.tsx
 
-import type { AppKotItem, AppMenuItem, AppInventoryItem, KitchenStation, KotItemStatus, KotPriority } from "@/types/appTypes";
+import type { AppKotItem, AppMenuItem, AppInventoryItem, KitchenStation, KotItemStatus, KotPriority, AppCombo } from "@/types/appTypes";
 
 // ─── Station Tab Type (Rule 35: No magic strings) ─────────────────────────────
 
@@ -195,4 +195,96 @@ export interface UseKitchenKdsReturn {
   menuItems: AppMenuItem[];
 }
 
+
+
+
+// ─── Menu CRUD Types ──────────────────────────────────────────────────────────
+
+// Zod-validated form values for add/edit menu item
+export interface KitchenMenuFormValues {
+  name:        string;
+  price:       number;
+  category:    string;
+  station:     KitchenStation;
+  isAvailable: boolean;
+  isSpecial:   boolean;
+  variants:    { name: string; price: number }[];
+}
+
+// Delete confirm dialog state
+export interface KitchenDeleteConfirm {
+  type:  "menu" | "combo";
+  id:    string;
+  label: string;
+}
+
+// useKitchenMenu hook return shape
+export interface UseKitchenMenuReturn {
+  menuItems:      AppMenuItem[];
+  combos:         AppCombo[];
+  inventoryItems: AppInventoryItem[];
+  isSubmitting:   boolean;
+  addMenuItem:    (values: KitchenMenuFormValues) => void;
+  updateMenuItem: (id: string, values: KitchenMenuFormValues) => void;
+  deleteMenuItem: (id: string) => void;
+  toggleAvailability: (id: string) => void;
+  addCombo:       (combo: Omit<AppCombo, "id">) => void;
+  updateCombo:    (id: string, updates: Omit<AppCombo, "id">) => void;
+  deleteCombo:    (id: string) => void;
+  saveRecipe:     (itemId: string, recipe: AppMenuItem["recipe"]) => void;
+}
+
+// KitchenMenuTable props
+export interface KitchenMenuTableProps {
+  menuItems:          AppMenuItem[];
+  onEdit:             (item: AppMenuItem) => void;
+  onDelete:           (id: string, name: string) => void;
+  onToggleAvailability: (id: string) => void;
+}
+
+// KitchenMenuFormModal props
+export interface KitchenMenuFormModalProps {
+  isOpen:         boolean;
+  editItem:       AppMenuItem | null;
+  inventoryItems: AppInventoryItem[];
+  onSave:         (values: KitchenMenuFormValues) => void;
+  onSaveRecipe:   (itemId: string, recipe: AppMenuItem["recipe"]) => void;
+  onClose:        () => void;
+}
+
+// KitchenRecipeEditor props
+export interface KitchenRecipeEditorProps {
+  itemId:         string;
+  currentRecipe:  AppMenuItem["recipe"];
+  inventoryItems: AppInventoryItem[];
+  onSave:         (recipe: AppMenuItem["recipe"]) => void;
+}
+
+// KitchenComboEditor props
+export interface KitchenComboEditorProps {
+  combos:    AppCombo[];
+  menuItems: AppMenuItem[];
+  onAdd:     (combo: Omit<AppCombo, "id">) => void;
+  onUpdate:  (id: string, updates: Omit<AppCombo, "id">) => void;
+  onDelete:  (id: string, name: string) => void;
+}
+
+// ─── Inventory Types ──────────────────────────────────────────────────────────
+
+export interface UseKitchenInventoryReturn {
+  inventoryItems: AppInventoryItem[];
+  lowStockItems:  AppInventoryItem[];
+  expiringItems:  AppInventoryItem[];
+  updateStock:    (id: string, newQty: number) => void;
+  addInventoryItem: (item: Omit<AppInventoryItem, "id">) => void;
+  deleteInventoryItem: (id: string) => void;
+  updateExpiryDate: (id: string, newDate: string) => void;
+}
+
+export interface KitchenInventoryTableProps {
+  inventoryItems: AppInventoryItem[];
+  onUpdateStock:  (id: string, newQty: number) => void;
+  onDelete: (id: string, name: string) => void;
+  onUpdateExpiry: (id: string, newDate: string) => void;
+}
 

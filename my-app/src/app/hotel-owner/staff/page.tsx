@@ -1,20 +1,20 @@
 "use client";
 
-// RESPONSIBILITY: Admin Staff Page shell composing summary metrics, AdminStaffTable, AdminStaffSalaryModal, AdminStaffAttendanceCalendarModal, and AdminStaffSalaryPayslipModal.
-// DATA FLOW: useAdminStaff → staff + salaryRecords + attendanceRecords → AdminStaffTable & modals → paySalary & markAttendance
+// RESPONSIBILITY: Owner Staff Page shell composing summary metrics, OwnerStaffTable, OwnerStaffSalaryModal, OwnerStaffAttendanceCalendarModal, and OwnerStaffSalaryPayslipModal.
+// DATA FLOW: useOwnerStaff → staff + salaryRecords + attendanceRecords → OwnerStaffTable & modals → paySalary & markAttendance
 
 import { useState } from "react";
 import { AuthGuard } from "@/app/auth/auth_components/AuthGuard";
-import { useAdminStaff } from "@/app/admin/admin_hooks/useAdminStaff";
-import { AdminStaffTable } from "@/app/admin/admin_components/AdminStaffTable";
-import { AdminStaffSalaryModal } from "@/app/admin/admin_components/AdminStaffSalaryModal";
-import { AdminStaffAttendanceCalendarModal } from "@/app/admin/admin_components/AdminStaffAttendanceCalendarModal";
-import { AdminStaffSalaryPayslipModal } from "@/app/admin/admin_components/AdminStaffSalaryPayslipModal";
+import { useOwnerStaff } from "@/app/hotel-owner/hotel-owner_hooks/useOwnerStaff";
+import { OwnerStaffTable } from "@/app/hotel-owner/hotel-owner_components/OwnerStaffTable";
+import { OwnerStaffSalaryModal } from "@/app/hotel-owner/hotel-owner_components/OwnerStaffSalaryModal";
+import { OwnerStaffAttendanceCalendarModal } from "@/app/hotel-owner/hotel-owner_components/OwnerStaffAttendanceCalendarModal";
+import { OwnerStaffSalaryPayslipModal } from "@/app/hotel-owner/hotel-owner_components/OwnerStaffSalaryPayslipModal";
 import type { AppUser, AppSalaryRecord, AttendanceStatus } from "@/types/appTypes";
 import { Users, Banknote, CalendarCheck } from "lucide-react";
 import { formatCurrency } from "@/lib/formatters";
 
-export default function AdminStaffPage() {
+export default function OwnerStaffPage() {
   const {
     staff,
     salaryRecords,
@@ -23,7 +23,7 @@ export default function AdminStaffPage() {
     markAttendance,
     getStaffMonthLeaveDays,
     paySalary,
-  } = useAdminStaff();
+  } = useOwnerStaff();
 
   const [selectedStaffForSalary, setSelectedStaffForSalary] = useState<AppUser | null>(null);
   const [selectedStaffForAttendance, setSelectedStaffForAttendance] = useState<AppUser | null>(null);
@@ -152,7 +152,7 @@ export default function AdminStaffPage() {
         {/* Main Table */}
         <div className="flex flex-col gap-4">
           <h2 className="text-[16px] font-bold text-text-primary">Staff Roster & Payroll Processing</h2>
-          <AdminStaffTable
+          <OwnerStaffTable
             staffList={staff}
             salaryRecords={salaryRecords}
             onToggleStatus={toggleStaffActive}
@@ -163,7 +163,7 @@ export default function AdminStaffPage() {
         </div>
 
         {/* Modals */}
-        <AdminStaffSalaryModal
+        <OwnerStaffSalaryModal
           isOpen={selectedStaffForSalary !== null}
           staff={selectedStaffForSalary}
           initialLeaveDays={initialLeaveDaysForSelected}
@@ -171,7 +171,7 @@ export default function AdminStaffPage() {
           onConfirm={handleConfirmPayment}
         />
 
-        <AdminStaffAttendanceCalendarModal
+        <OwnerStaffAttendanceCalendarModal
           isOpen={selectedStaffForAttendance !== null}
           staff={selectedStaffForAttendance}
           attendanceRecords={attendanceRecords}
@@ -179,7 +179,7 @@ export default function AdminStaffPage() {
           onClose={() => setSelectedStaffForAttendance(null)}
         />
 
-        <AdminStaffSalaryPayslipModal
+        <OwnerStaffSalaryPayslipModal
           isOpen={payslipData !== null}
           staff={payslipData?.staff || null}
           salaryRecord={payslipData?.record || null}

@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { AppShellThemeProvider } from "@/components/AppShell/AppShellThemeProvider";
 import { AppShell } from "@/components/AppShell/AppShell";
+import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {
   title: "Smart POS 360",
@@ -25,6 +26,7 @@ export default function RootLayout({
       style={{ colorScheme: "dark" }}
     >
       <body className="min-h-screen bg-page text-text-primary antialiased" suppressHydrationWarning>
+        <NextTopLoader color="var(--primary)" showSpinner={false} />
         <AppShellThemeProvider>
           <AppShell>{children}</AppShell>
         </AppShellThemeProvider>

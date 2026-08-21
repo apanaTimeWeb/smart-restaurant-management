@@ -1,11 +1,11 @@
 "use client";
 
-// RESPONSIBILITY: Admin Table QR Standee Generator page shell.
-// Reads tables from localStorage, passes to AdminQrGenerator.
-// DATA FLOW: localStorage(app_tables) → AdminQrGenerator → QR canvas grid
+// RESPONSIBILITY: Owner Table QR Standee Generator page shell.
+// Reads tables from localStorage, passes to OwnerQrGenerator.
+// DATA FLOW: localStorage(app_tables) → OwnerQrGenerator → QR canvas grid
 
 import { useEffect, useState } from "react";
-import { AdminQrGenerator } from "@/app/admin/admin_components/AdminQrGenerator";
+import { OwnerQrGenerator } from "@/app/hotel-owner/hotel-owner_components/OwnerQrGenerator";
 import { STORAGE_KEYS } from "@/lib/localStorageSeeder";
 import { AuthGuard } from "@/app/auth/auth_components/AuthGuard";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
@@ -18,7 +18,7 @@ const PAGE_SUBTITLE = "Generate and print QR codes for customer self-ordering"  
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
-export default function AdminQrPage() {
+export default function OwnerQrPage() {
   const [tables, setTables] = useLocalStorage<AppTable[]>(STORAGE_KEYS.TABLES, []);
   const [tenantId, setTenantId] = useState<string>("");
   const [isMounted,  setIsMounted]  = useState(false);
@@ -110,7 +110,7 @@ export default function AdminQrPage() {
             ))}
           </div>
         ) : (
-          <AdminQrGenerator tables={tables} tenantId={tenantId} />
+          <OwnerQrGenerator tables={tables} tenantId={tenantId} />
         )}
       </div>
     </AuthGuard>

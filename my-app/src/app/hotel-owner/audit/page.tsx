@@ -1,13 +1,13 @@
 ﻿"use client";
 
-// RESPONSIBILITY: Admin Audit Log page shell.
-// Reads audit logs from localStorage and renders AdminAuditLogTable.
-// DATA FLOW: useLocalStorage(AUDIT_LOGS) → AdminAuditLogTable → UI
+// RESPONSIBILITY: Owner Audit Log page shell.
+// Reads audit logs from localStorage and renders OwnerAuditLogTable.
+// DATA FLOW: useLocalStorage(AUDIT_LOGS) → OwnerAuditLogTable → UI
 
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { STORAGE_KEYS } from "@/lib/localStorageSeeder";
-import { AdminAuditLogTable } from "@/app/admin/admin_components/AdminAuditLogTable";
+import { OwnerAuditLogTable } from "@/app/hotel-owner/hotel-owner_components/OwnerAuditLogTable";
 import { AuthGuard } from "@/app/auth/auth_components/AuthGuard";
 import type { AppAuditLog } from "@/types/appTypes";
 
@@ -19,7 +19,7 @@ const SKELETON_ROWS = 5                                                    as co
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
-export default function AdminAuditPage() {
+export default function OwnerAuditPage() {
   const [isMounted, setIsMounted] = useState(false);
 
   // Deps: [] — run once on mount only
@@ -45,7 +45,7 @@ export default function AdminAuditPage() {
     <AuthGuard allowedRoles={["HOTEL_OWNER"]}>
       <div className="flex flex-col gap-5">
         <AuditPageHeader />
-        <AdminAuditLogTable auditLogs={auditLogs} />
+        <OwnerAuditLogTable auditLogs={auditLogs} />
       </div>
     </AuthGuard>
   );

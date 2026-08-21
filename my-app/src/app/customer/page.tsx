@@ -28,8 +28,21 @@ const VIEW_THANK_YOU    = "THANK_YOU"    as const;
 
 // RESPONSIBILITY: Final thank-you screen shown after feedback submission.
 function ThankYouScreen({ tableNumber }: { tableNumber: string }) {
+  const { logout } = useAuth();
+  const router = useRouter();
+  
   return (
     <div className="flex flex-col items-center justify-center py-20 px-6 text-center gap-5">
+      <div className="absolute top-4 right-4 flex items-center gap-2">
+        <ThemeToggle />
+        <button
+          onClick={() => { logout(); router.push("/auth/login"); }}
+          className="flex h-9 w-9 items-center justify-center rounded-xl bg-danger/10 text-danger hover:bg-danger hover:text-white transition-colors"
+        >
+          <LogOut size={16} />
+        </button>
+      </div>
+      
       <div className="flex h-20 w-20 items-center justify-center rounded-full bg-success-bg text-[40px]">
         🙏
       </div>

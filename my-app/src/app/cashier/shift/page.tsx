@@ -10,11 +10,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Loader2 } from "lucide-react";
-import { useAdminShift } from "@/app/admin/admin_hooks/useAdminShift";
-import { AdminShiftReport } from "@/app/admin/admin_components/AdminShiftReport";
+import { useCashierShift } from "@/app/cashier/cashier_hooks/useCashierShift";
+import { CashierShiftReport } from "@/app/cashier/cashier_components/CashierShiftReport";
 import { formatCurrency, formatDateTime } from "@/lib/formatters";
 import { AuthGuard } from "@/app/auth/auth_components/AuthGuard";
-import type { AdminShiftOpenFormValues, AdminShiftCloseFormValues } from "@/app/admin/admin_types/AdminTypes";
+import type { CashierShiftOpenFormValues, CashierShiftCloseFormValues } from "@/app/cashier/cashier_types/CashierTypes";
 
 // ─── Constants (Rule 35: No magic strings) ────────────────────────────────────
 
@@ -42,9 +42,9 @@ function OpenShiftForm({
   isSubmitting: boolean;
 }) {
   const { register, handleSubmit, formState: { errors } } =
-    useForm<AdminShiftOpenFormValues>({ resolver: zodResolver(openSchema), defaultValues: { openingCash: 0 } });
+    useForm<CashierShiftOpenFormValues>({ resolver: zodResolver(openSchema), defaultValues: { openingCash: 0 } });
 
-  function onSubmit(values: AdminShiftOpenFormValues) {
+  function onSubmit(values: CashierShiftOpenFormValues) {
     onOpen(values.openingCash);
   }
 
@@ -86,9 +86,9 @@ function CloseShiftForm({
 }) {
   const [confirmed, setConfirmed] = useState(false);
   const { register, handleSubmit, formState: { errors } } =
-    useForm<AdminShiftCloseFormValues>({ resolver: zodResolver(closeSchema), defaultValues: { closingCash: 0 } });
+    useForm<CashierShiftCloseFormValues>({ resolver: zodResolver(closeSchema), defaultValues: { closingCash: 0 } });
 
-  function onSubmit(values: AdminShiftCloseFormValues) {
+  function onSubmit(values: CashierShiftCloseFormValues) {
     onClose(values.closingCash);
   }
 
@@ -142,13 +142,13 @@ function CloseShiftForm({
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
-export default function AdminShiftPage() {
+export default function CashierShiftPage() {
   const [isMounted, setIsMounted] = useState(false);
 
   // Deps: [] — run once on mount only
   useEffect(() => { setIsMounted(true); }, []);
 
-  const { shift, isOpen, isSubmitting, salesHistory, openShift, closeShift } = useAdminShift();
+  const { shift, isOpen, isSubmitting, salesHistory, openShift, closeShift } = useCashierShift();
 
   if (!isMounted) {
     return (
@@ -190,7 +190,7 @@ export default function AdminShiftPage() {
               <p className="text-[12px] font-semibold uppercase tracking-wide text-text-secondary">
                 Last Shift Z-Report
               </p>
-              <AdminShiftReport shift={shift} salesHistory={salesHistory} />
+              <CashierShiftReport shift={shift} salesHistory={salesHistory} />
             </div>
           </>
         )}
@@ -201,7 +201,7 @@ export default function AdminShiftPage() {
             <p className="text-[12px] font-semibold uppercase tracking-wide text-text-secondary">
               Live Shift Report
             </p>
-            <AdminShiftReport shift={shift} salesHistory={salesHistory} />
+            <CashierShiftReport shift={shift} salesHistory={salesHistory} />
           </div>
         )}
       </div>

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 // RESPONSIBILITY: 5-star feedback form shown after order is complete.
 // Tap-to-select star rating + optional comment textarea.
@@ -6,7 +6,10 @@
 // DATA FLOW: useCustomerOrder → customer/page.tsx → CustomerFeedbackForm → UI
 
 import { useState } from "react";
-import { Star, Loader2, Heart } from "lucide-react";
+import { Star, Loader2, Heart, LogOut } from "lucide-react";
+import { ThemeToggle } from "@/components/Theme/ThemeToggle";
+import { useAuth } from "@/app/auth/auth_hooks/useAuth";
+import { useRouter } from "next/navigation";
 import type { CustomerFeedbackFormProps } from "@/app/customer/customer_types/CustomerTypes";
 
 // ─── Constants (Rule 35: No magic strings / numbers) ─────────────────────────
@@ -93,8 +96,21 @@ export function CustomerFeedbackForm({
     onSubmit(rating, comment.trim());
   }
 
+  const { logout } = useAuth();
+  const router = useRouter();
+
   return (
     <div className="flex flex-col gap-6 py-4">
+      {/* Top Controls */}
+      <div className="flex items-center justify-end gap-2 px-4">
+        <ThemeToggle />
+        <button
+          onClick={() => { logout(); router.push("/auth/login"); }}
+          className="flex h-9 w-9 items-center justify-center rounded-xl bg-danger/10 text-danger hover:bg-danger hover:text-white transition-colors"
+        >
+          <LogOut size={16} />
+        </button>
+      </div>
 
       {/* Header */}
       <div className="text-center">

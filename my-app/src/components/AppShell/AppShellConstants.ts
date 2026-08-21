@@ -1,67 +1,75 @@
-﻿import type { AppShellNavGroup } from "@/components/AppShell/AppShellTypes";
+import type { AppShellNavGroup } from "@/components/AppShell/AppShellTypes";
+
+import { ADMIN_ROUTES } from "@/app/admin/admin_url_config";
+import { OWNER_ROUTES } from "@/app/hotel-owner/hotel-owner_url_config";
+import { CASHIER_ROUTES } from "@/app/cashier/cashier_url_config";
+import { WAITER_ROUTES } from "@/app/waiter/waiter_url_config";
+import { KITCHEN_ROUTES } from "@/app/kitchen/kitchen_url_config";
+import { CUSTOMER_ROUTES } from "@/app/customer/customer_url_config";
+import { SUPER_ADMIN_ROUTES } from "@/app/super-admin/super-admin_url_config";
 
 export const APP_ROUTES = {
   // Admin Routes
-  ADMIN_DASHBOARD: "/admin/dashboard",
-  ADMIN_REPORTS: "/admin/reports",
-  ADMIN_RESERVATIONS: "/admin/reservations",
-  ADMIN_MENU: "/admin/menu",
-  ADMIN_INVENTORY: "/admin/inventory",
-  ADMIN_COUPONS: "/admin/coupons",
-  ADMIN_SETTINGS: "/admin/settings",
-  ADMIN_STAFF: "/admin/staff",
-  ADMIN_AUDIT: "/admin/audit",
-  ADMIN_SHIFT: "/admin/shift",
-  ADMIN_BACKUP: "/admin/data",
-  ADMIN_QR: "/admin/qr",
-  ADMIN_LIST_HOTEL: "/admin/list-hotel",
+  ADMIN_DASHBOARD: ADMIN_ROUTES.DASHBOARD,
+  ADMIN_REPORTS: ADMIN_ROUTES.REPORTS,
+  ADMIN_RESERVATIONS: ADMIN_ROUTES.RESERVATIONS,
+  ADMIN_MENU: ADMIN_ROUTES.MENU,
+  ADMIN_INVENTORY: ADMIN_ROUTES.INVENTORY,
+  ADMIN_COUPONS: ADMIN_ROUTES.COUPONS,
+  ADMIN_SETTINGS: ADMIN_ROUTES.SETTINGS,
+  ADMIN_STAFF: ADMIN_ROUTES.STAFF,
+  ADMIN_AUDIT: ADMIN_ROUTES.AUDIT,
+  ADMIN_SHIFT: ADMIN_ROUTES.SHIFT,
+  ADMIN_BACKUP: ADMIN_ROUTES.BACKUP,
+  ADMIN_QR: ADMIN_ROUTES.QR,
+  ADMIN_LIST_HOTEL: ADMIN_ROUTES.LIST_HOTEL,
 
   // Hotel Owner Routes
-  OWNER_DASHBOARD: "/hotel-owner/dashboard",
-  OWNER_REPORTS: "/hotel-owner/reports",
-  OWNER_RESERVATIONS: "/hotel-owner/reservations",
-  OWNER_CREDENTIALS: "/hotel-owner/staff-credentials",
-  OWNER_MENU: "/hotel-owner/menu",
-  OWNER_INVENTORY: "/hotel-owner/inventory",
-  OWNER_COUPONS: "/hotel-owner/coupons",
-  OWNER_SETTINGS: "/hotel-owner/settings",
-  OWNER_STAFF: "/hotel-owner/staff",
-  OWNER_AUDIT: "/hotel-owner/audit",
-  OWNER_SHIFT: "/hotel-owner/shift",
-  OWNER_BACKUP: "/hotel-owner/data",
-  OWNER_QR: "/hotel-owner/qr",
-  OWNER_LIST_HOTEL: "/hotel-owner/list-hotel",
+  OWNER_DASHBOARD: OWNER_ROUTES.DASHBOARD,
+  OWNER_REPORTS: OWNER_ROUTES.REPORTS,
+  OWNER_RESERVATIONS: OWNER_ROUTES.RESERVATIONS,
+  OWNER_CREDENTIALS: OWNER_ROUTES.CREDENTIALS,
+  OWNER_MENU: OWNER_ROUTES.MENU,
+  OWNER_INVENTORY: OWNER_ROUTES.INVENTORY,
+  OWNER_COUPONS: OWNER_ROUTES.COUPONS,
+  OWNER_SETTINGS: OWNER_ROUTES.SETTINGS,
+  OWNER_STAFF: OWNER_ROUTES.STAFF,
+  OWNER_AUDIT: OWNER_ROUTES.AUDIT,
+  OWNER_SHIFT: OWNER_ROUTES.SHIFT,
+  OWNER_BACKUP: OWNER_ROUTES.BACKUP,
+  OWNER_QR: OWNER_ROUTES.QR,
+  OWNER_LIST_HOTEL: OWNER_ROUTES.LIST_HOTEL,
 
   // Cashier Routes
-  CASHIER_DASHBOARD: "/cashier/dashboard",
-  CASHIER_REPORTS: "/cashier/reports",
-  CASHIER_BILLING: "/cashier",
-  CASHIER_SHIFT: "/cashier/shift",
+  CASHIER_DASHBOARD: CASHIER_ROUTES.DASHBOARD,
+  CASHIER_REPORTS: CASHIER_ROUTES.REPORTS,
+  CASHIER_BILLING: CASHIER_ROUTES.BILLING,
+  CASHIER_SHIFT: CASHIER_ROUTES.SHIFT,
 
   // Waiter Routes
-  WAITER_DASHBOARD: "/waiter/dashboard",
-  WAITER_RESERVATIONS: "/waiter/reservations",
-  WAITER: "/waiter",
+  WAITER_DASHBOARD: WAITER_ROUTES.DASHBOARD,
+  WAITER_RESERVATIONS: WAITER_ROUTES.RESERVATIONS,
+  WAITER: WAITER_ROUTES.BASE,
 
   // Kitchen Routes
-  KITCHEN: "/kitchen",
-  KITCHEN_MENU: "/kitchen/menu",
-  KITCHEN_INVENTORY: "/kitchen/inventory",
+  KITCHEN: KITCHEN_ROUTES.BASE,
+  KITCHEN_MENU: KITCHEN_ROUTES.MENU,
+  KITCHEN_INVENTORY: KITCHEN_ROUTES.INVENTORY,
 
   // Customer Routes
-  CUSTOMER_QR: "/customer",
-  CUSTOMER_RESERVATIONS: "/customer/reservations",
+  CUSTOMER_QR: CUSTOMER_ROUTES.QR,
+  CUSTOMER_RESERVATIONS: CUSTOMER_ROUTES.RESERVATIONS,
 
   // Super Admin Routes
-  SUPER_ADMIN: "/super-admin/dashboard",
-  SUPER_ADMIN_USERS: "/super-admin/users",
-  SUPER_ADMIN_AUDIT: "/super-admin/audit",
-  SUPER_ADMIN_BILLING: "/super-admin/billing",
-  SUPER_ADMIN_SETTINGS: "/super-admin/settings",
-  SUPER_ADMIN_ANALYTICS: "/super-admin/analytics",
-  SUPER_ADMIN_HOTEL_LIST: "/super-admin/hotels",
-  SUPER_ADMIN_SUBSCRIPTION_PLAN: "/super-admin/subscriptions",
-  SUPER_ADMIN_BACKUP: "/super-admin/backup",
+  SUPER_ADMIN: SUPER_ADMIN_ROUTES.DASHBOARD,
+  SUPER_ADMIN_USERS: SUPER_ADMIN_ROUTES.USERS,
+  SUPER_ADMIN_AUDIT: SUPER_ADMIN_ROUTES.AUDIT,
+  SUPER_ADMIN_BILLING: SUPER_ADMIN_ROUTES.BILLING,
+  SUPER_ADMIN_SETTINGS: SUPER_ADMIN_ROUTES.SETTINGS,
+  SUPER_ADMIN_ANALYTICS: SUPER_ADMIN_ROUTES.ANALYTICS,
+  SUPER_ADMIN_HOTEL_LIST: SUPER_ADMIN_ROUTES.HOTEL_LIST,
+  SUPER_ADMIN_SUBSCRIPTION_PLAN: SUPER_ADMIN_ROUTES.SUBSCRIPTION_PLAN,
+  SUPER_ADMIN_BACKUP: SUPER_ADMIN_ROUTES.BACKUP,
 } as const;
 
 export const APP_SHELL_NAV_GROUPS: AppShellNavGroup[] = [

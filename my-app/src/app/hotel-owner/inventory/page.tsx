@@ -1,24 +1,24 @@
 "use client";
 
-// RESPONSIBILITY: Admin Stock Inventory page shell.
-// Shows low stock + expiry alert banners, AdminInventoryTable, and AdminSupplierPoModal.
-// DATA FLOW: useAdminInventory → AdminInventoryTable & AdminSupplierPoModal → UI
+// RESPONSIBILITY: Owner Stock Inventory page shell.
+// Shows low stock + expiry alert banners, OwnerInventoryTable, and OwnerSupplierPoModal.
+// DATA FLOW: useOwnerInventory → OwnerInventoryTable & OwnerSupplierPoModal → UI
 
 import { useEffect, useState } from "react";
 import { AlertTriangle, AlertCircle, ShoppingCart } from "lucide-react";
-import { useAdminInventory } from "@/app/admin/admin_hooks/useAdminInventory";
-import { AdminInventoryTable } from "@/app/admin/admin_components/AdminInventoryTable";
-import { AdminSupplierPoModal } from "@/app/admin/admin_components/AdminSupplierPoModal";
-import { AdminLowStockSlaTracker } from "@/app/admin/admin_components/AdminLowStockSlaTracker";
+import { useOwnerInventory } from "@/app/hotel-owner/hotel-owner_hooks/useOwnerInventory";
+import { OwnerInventoryTable } from "@/app/hotel-owner/hotel-owner_components/OwnerInventoryTable";
+import { OwnerSupplierPoModal } from "@/app/hotel-owner/hotel-owner_components/OwnerSupplierPoModal";
+import { OwnerLowStockSlaTracker } from "@/app/hotel-owner/hotel-owner_components/OwnerLowStockSlaTracker";
 import { AuthGuard } from "@/app/auth/auth_components/AuthGuard";
-import { AdminAddInventoryModal } from "@/app/admin/admin_components/AdminAddInventoryModal";
+import { OwnerAddInventoryModal } from "@/app/hotel-owner/hotel-owner_components/OwnerAddInventoryModal";
 import { Plus } from "lucide-react";
 
 const PAGE_TITLE = "Stock Inventory & Supplier PO Requisitions" as const;
 const PAGE_SUBTITLE = "Monitor stock levels, threshold alerts, expiry dates, and generate supplier Purchase Orders" as const;
 const SKELETON_ROWS = 6 as const;
 
-export default function AdminInventoryPage() {
+export default function OwnerInventoryPage() {
   const [isMounted, setIsMounted] = useState(false);
   const [isPoModalOpen, setIsPoModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -27,7 +27,7 @@ export default function AdminInventoryPage() {
     setIsMounted(true);
   }, []);
 
-  const { inventoryItems, lowStockItems, expiringItems, updateStock, addInventoryItem, deleteInventoryItem, updateExpiryDate } = useAdminInventory();
+  const { inventoryItems, lowStockItems, expiringItems, updateStock, addInventoryItem, deleteInventoryItem, updateExpiryDate } = useOwnerInventory();
 
   if (!isMounted) {
     return (
@@ -68,7 +68,7 @@ export default function AdminInventoryPage() {
         </div>
 
         {/* Live Kitchen Low Stock SLA Tracker & 24-Hour Escalation Monitor */}
-        <AdminLowStockSlaTracker />
+        <OwnerLowStockSlaTracker />
 
         {/* Low stock alert banner */}
         {lowStockItems.length > 0 && (
@@ -100,20 +100,20 @@ export default function AdminInventoryPage() {
           </div>
         )}
 
-        <AdminInventoryTable
+        <OwnerInventoryTable
           inventoryItems={inventoryItems}
           onUpdateStock={updateStock}
           onDelete={deleteInventoryItem}
           onUpdateExpiry={updateExpiryDate}
         />
 
-        <AdminSupplierPoModal
+        <OwnerSupplierPoModal
           isOpen={isPoModalOpen}
           lowStockItems={lowStockItems}
           onClose={() => setIsPoModalOpen(false)}
         />
 
-        <AdminAddInventoryModal
+        <OwnerAddInventoryModal
           isOpen={isAddModalOpen}
           onClose={() => setIsAddModalOpen(false)}
           onAdd={addInventoryItem}
