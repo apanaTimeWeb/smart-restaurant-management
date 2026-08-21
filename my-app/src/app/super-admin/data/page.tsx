@@ -1,12 +1,12 @@
 "use client";
 
-// RESPONSIBILITY: Admin Data Backup & Restore page shell.
-// Wires useAdminData hook to AdminDataPanel.
-// DATA FLOW: useAdminData → AdminDataPanel → UI
+// RESPONSIBILITY: SuperAdmin Data Backup & Restore page shell.
+// Wires useSuperAdminData hook to SuperAdminDataPanel.
+// DATA FLOW: useSuperAdminData → SuperAdminDataPanel → UI
 
 import { useEffect, useState } from "react";
-import { useAdminData } from "@/app/admin/admin_hooks/useAdminData";
-import { AdminDataPanel } from "@/app/admin/admin_components/AdminDataPanel";
+import { useSuperAdminData } from "@/app/super-admin/super-admin_hooks/useSuperAdminData";
+import { SuperAdminDataPanel } from "@/app/super-admin/super-admin_components/SuperAdminDataPanel";
 import { AuthGuard } from "@/app/auth/auth_components/AuthGuard";
 
 // ─── Constants (Rule 35: No magic strings) ────────────────────────────────────
@@ -16,7 +16,7 @@ const PAGE_SUBTITLE = "Export, import, and emergency reset system data"         
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
-export default function AdminDataPage() {
+export default function SuperAdminDataPage() {
   const [isMounted, setIsMounted] = useState(false);
 
   // Deps: [] — run once on mount only
@@ -30,7 +30,7 @@ export default function AdminDataPage() {
     exportBackup,
     importRestore,
     emergencyReset,
-  } = useAdminData();
+  } = useSuperAdminData();
 
   if (!isMounted) {
     return (
@@ -49,7 +49,7 @@ export default function AdminDataPage() {
     <AuthGuard allowedRoles={["ADMIN"]}>
       <div className="rounded-xl border border-primary/20 bg-white/10 backdrop-blur-lg p-6 shadow-lg flex flex-col gap-5">
         <DataPageHeader />
-        <AdminDataPanel
+        <SuperAdminDataPanel
           storageUsage={storageUsage}
           isExporting={isExporting}
           isImporting={isImporting}

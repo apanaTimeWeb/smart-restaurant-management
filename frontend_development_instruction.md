@@ -65,8 +65,12 @@ Never hardcode URLs (e.g., `/api/auth/refresh`, `/login`, etc.) directly into AP
 12. **No Hardcoded HTTP Status Codes**: 
 Never hardcode numeric HTTP status codes (e.g., `401`, `500`, `200`) in API routes, proxies, or fetch wrappers. Always use standard enums/constants from libraries like `http-status-codes` (e.g., `StatusCodes.UNAUTHORIZED`). This improves code readability and prevents silly typos in status codes.
 
-13. **Update AI-Context Documentation**: 
-Once the entire refactor is complete, update the project documentation in @[[MODULE_NAME]_features.md]. This document must serve as a map for future AI sessions. Clearly document the new "Feature-Based Sub-folder" directory structure, what each file precisely does, and where the centralized data/state is kept.
+13. **Update AI-Context Documentation (The Feature Map)**: 
+Once the entire refactor is complete, generate or update a `[moduleName]_features.md` documentation file inside the module's root folder. This document MUST serve as a master map for future AI sessions and human developers. It must explicitly include:
+- **Module Overview & Directory Structure**: Explain the purpose of the module and the role of its `_components`, `_hooks`, and `_types` folders.
+- **Core Features & Pages**: An exhaustive list of every feature sub-directory inside the module along with a clear, business-logic description of what that feature actually does (e.g., "`/inventory`: Manages raw materials and low stock alerts"). Do not just write generic placeholder text.
+- **State & Data**: Explicitly document where centralized data (e.g., hardcoded presets or mock APIs) and state (Context/Zustand) are kept.
+- **Architectural Rules Checklist**: Append a summary of these strict architectural rules (Micro-modularization, Hook separation, Types isolation) at the bottom of the document so the AI agent never forgets the rules when working inside that specific module.
 
 14. **Backend-Driven UI Messages (No Hardcoded Toasts/Alerts)**: 
 Never hardcode success or error messages (e.g., "User created successfully" or "Invalid credentials") in the frontend components, hooks, or toast notifications. The frontend must strictly display the `message` string provided by the backend's standardized JSON response envelope.

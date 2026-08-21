@@ -6,6 +6,9 @@
 // DATA FLOW: URL(?table) → useCustomerOrder → customer/page.tsx → Customer* components
 
 import { useState } from "react";
+import { ThemeToggle } from "@/components/Theme/ThemeToggle";
+import { useAuth } from "@/app/auth/auth_hooks/useAuth";
+import { useRouter } from "next/navigation";
 import { useCustomerOrder } from "@/app/customer/customer_hooks/useCustomerOrder";
 import { CustomerMenuBrowser } from "@/app/customer/customer_components/CustomerMenuBrowser";
 import { CustomerCartDrawer } from "@/app/customer/customer_components/CustomerCartDrawer";
@@ -25,8 +28,21 @@ const VIEW_THANK_YOU    = "THANK_YOU"    as const;
 
 // RESPONSIBILITY: Final thank-you screen shown after feedback submission.
 function ThankYouScreen({ tableNumber }: { tableNumber: string }) {
+  const { logout } = useAuth();
+  const router = useRouter();
+  
   return (
     <div className="flex flex-col items-center justify-center py-20 px-6 text-center gap-5">
+      <div className="absolute top-4 right-4 flex items-center gap-2">
+        <ThemeToggle />
+        <button
+          onClick={() => { logout(); router.push("/auth/login"); }}
+          className="flex h-9 w-9 items-center justify-center rounded-xl bg-danger/10 text-danger hover:bg-danger hover:text-white transition-colors"
+        >
+          <LogOut size={16} />
+        </button>
+      </div>
+      
       <div className="flex h-20 w-20 items-center justify-center rounded-full bg-success-bg text-[40px]">
         🙏
       </div>
@@ -47,17 +63,29 @@ function ThankYouScreen({ tableNumber }: { tableNumber: string }) {
 }
 
 import { CustomerQrUploadModal } from "@/app/customer/customer_components/CustomerQrUploadModal";
-import { Upload, QrCode, Sparkles } from "lucide-react";
+import { Upload, QrCode, Sparkles, LogOut } from "lucide-react";
 
 // ─── No Table Screen with Upload QR Image Option ──────────────────────────────
 
 // RESPONSIBILITY: Shown when no valid ?table= param is found in URL.
 // Offers uploading existing Waiter QR code image or quick table selection for laptops.
 function NoTableScreen() {
+  const { logout } = useAuth();
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(true);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-6 text-center gap-5 bg-page">
+    <div className="relative flex min-h-screen flex-col items-center justify-center p-6 text-center gap-5 bg-page">
+      <div className="absolute top-4 right-4 flex items-center gap-2">
+        <ThemeToggle />
+        <button
+          onClick={() => { logout(); router.push("/auth/login"); }}
+          className="flex h-9 w-9 items-center justify-center rounded-xl bg-danger/10 text-danger hover:bg-danger hover:text-white transition-colors"
+        >
+          <LogOut size={16} />
+        </button>
+      </div>
+
       <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-success/10 text-success text-[36px] border border-success/30 shadow-lg">
         <QrCode size={40} />
       </div>

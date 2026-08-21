@@ -52,7 +52,7 @@ export default function AdminQrPage() {
   }, []);
 
   return (
-    <AuthGuard allowedRoles={["ADMIN", "HOTEL_OWNER"]}>
+    <AuthGuard allowedRoles={["ADMIN"]}>
       <div className="flex flex-col gap-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex flex-col gap-1">

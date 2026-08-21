@@ -1,0 +1,16 @@
+export const OWNER_ROUTES = {
+  DASHBOARD: "/hotel-owner/dashboard",
+  REPORTS: "/hotel-owner/reports",
+  RESERVATIONS: "/hotel-owner/reservations",
+  CREDENTIALS: "/hotel-owner/staff-credentials",
+  MENU: "/hotel-owner/menu",
+  INVENTORY: "/hotel-owner/inventory",
+  COUPONS: "/hotel-owner/coupons",
+  SETTINGS: "/hotel-owner/settings",
+  STAFF: "/hotel-owner/staff",
+  AUDIT: "/hotel-owner/audit",
+  SHIFT: "/hotel-owner/shift",
+  BACKUP: "/hotel-owner/data",
+  QR: "/hotel-owner/qr",
+  LIST_HOTEL: "/hotel-owner/list-hotel",
+} as const;

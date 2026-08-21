@@ -16,7 +16,7 @@ import {
   Sparkles,
   ArrowRight,
 } from "lucide-react";
-import { createServiceRequest } from "@/lib/serviceRequestService";
+import { createServiceRequest } from "../customer_utils/customer_serviceRequestService";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { STORAGE_KEYS } from "@/lib/localStorageSeeder";
 import { showToast } from "@/lib/toastService";

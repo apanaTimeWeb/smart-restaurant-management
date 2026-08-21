@@ -1,9 +1,5 @@
-﻿// RESPONSIBILITY: Centralized URL configuration for Kitchen module (Rule 11)
-export const KitchenUrlConfig = {
-  pages: {
-    root: "/kitchen",
-  },
-  api: {
-    base: "/api/kitchen",
-  },
+export const KITCHEN_ROUTES = {
+  BASE: "/kitchen",
+  MENU: "/kitchen/menu",
+  INVENTORY: "/kitchen/inventory",
 } as const;

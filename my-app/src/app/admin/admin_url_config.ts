@@ -1,9 +1,15 @@
-﻿// RESPONSIBILITY: Centralized URL configuration for Admin module (Rule 11)
-export const AdminUrlConfig = {
-  pages: {
-    root: "/admin",
-  },
-  api: {
-    base: "/api/admin",
-  },
+export const ADMIN_ROUTES = {
+  DASHBOARD: "/admin/dashboard",
+  REPORTS: "/admin/reports",
+  RESERVATIONS: "/admin/reservations",
+  MENU: "/admin/menu",
+  INVENTORY: "/admin/inventory",
+  COUPONS: "/admin/coupons",
+  SETTINGS: "/admin/settings",
+  STAFF: "/admin/staff",
+  AUDIT: "/admin/audit",
+  SHIFT: "/admin/shift",
+  BACKUP: "/admin/data",
+  QR: "/admin/qr",
+  LIST_HOTEL: "/admin/list-hotel",
 } as const;

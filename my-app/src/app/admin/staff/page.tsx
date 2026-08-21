@@ -101,7 +101,7 @@ export default function AdminStaffPage() {
     : 0;
 
   return (
-    <AuthGuard allowedRoles={["ADMIN", "HOTEL_OWNER"]}>
+    <AuthGuard allowedRoles={["ADMIN"]}>
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-1">
           <h1 className="text-[22px] font-bold text-text-primary">Staff Management, Attendance & Payroll</h1>

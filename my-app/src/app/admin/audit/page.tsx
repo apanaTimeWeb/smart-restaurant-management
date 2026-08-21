@@ -42,7 +42,7 @@ export default function AdminAuditPage() {
   }
 
   return (
-    <AuthGuard allowedRoles={["ADMIN", "HOTEL_OWNER"]}>
+    <AuthGuard allowedRoles={["ADMIN"]}>
       <div className="flex flex-col gap-5">
         <AuditPageHeader />
         <AdminAuditLogTable auditLogs={auditLogs} />

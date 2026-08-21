@@ -7,7 +7,7 @@
 import React from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { STORAGE_KEYS } from "@/lib/localStorageSeeder";
-import { recordOrderEvent } from "@/lib/orderEventService";
+import { recordOrderEvent } from "../waiter_utils/waiter_orderEventService";
 import { showToast } from "@/lib/toastService";
 import type { AppOrder, AppMenuItem } from "@/types/appTypes";
 import { CheckCircle2, Clock, Utensils, Sparkles } from "lucide-react";

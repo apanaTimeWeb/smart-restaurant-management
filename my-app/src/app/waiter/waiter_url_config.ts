@@ -1,9 +1,5 @@
-﻿// RESPONSIBILITY: Centralized URL configuration for Waiter module (Rule 11)
-export const WaiterUrlConfig = {
-  pages: {
-    root: "/waiter",
-  },
-  api: {
-    base: "/api/waiter",
-  },
+export const WAITER_ROUTES = {
+  DASHBOARD: "/waiter/dashboard",
+  RESERVATIONS: "/waiter/reservations",
+  BASE: "/waiter",
 } as const;
