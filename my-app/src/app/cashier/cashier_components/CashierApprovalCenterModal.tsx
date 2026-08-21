@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 // RESPONSIBILITY: Cashier Void & Discount Request Approval Center Modal.
 // Displays pending void item requests and discount authorization requests from Waiters.
@@ -7,7 +7,7 @@
 import React from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { STORAGE_KEYS } from "@/lib/localStorageSeeder";
-import { recordOrderEvent } from "@/lib/orderEventService";
+import { recordOrderEvent } from "../cashier_utils/cashier_orderEventService";
 import { dispatchNotification } from "@/lib/notificationService";
 import { showToast } from "@/lib/toastService";
 import type { AppOrder, AppMenuItem } from "@/types/appTypes";

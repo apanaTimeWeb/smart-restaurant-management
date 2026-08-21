@@ -7,7 +7,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { STORAGE_KEYS } from "@/lib/localStorageSeeder";
-import { updateServiceRequestStatus } from "@/lib/serviceRequestService";
+import { updateServiceRequestStatus } from "../waiter_utils/waiter_serviceRequestService";
 import type { AppServiceRequest } from "@/types/appTypes";
 import {
   Utensils,

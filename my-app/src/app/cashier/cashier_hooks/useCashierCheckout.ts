@@ -1,19 +1,19 @@
-﻿"use client";
+"use client";
 
 // RESPONSIBILITY: All checkout automation logic for the Cashier POS module.
-// Orchestrates 6 steps: inventory deduction â†’ sales save â†’ CRM update â†’
-// order COMPLETED â†’ table AVAILABLE â†’ audit log.
+// Orchestrates 6 steps: inventory deduction → sales save → CRM update →
+// order COMPLETED → table AVAILABLE → audit log.
 // Also provides buildWhatsAppLink and buildReceiptText pure helpers.
-// No JSX â€” pure logic hook consumed by cashier/page.tsx.
-// DATA FLOW: CashierCheckoutPayload â†’ processCheckout â†’ 6 localStorage writes
-//            â†’ returns success boolean â†’ cashier/page.tsx shows CashierReceiptModal
+// No JSX — pure logic hook consumed by cashier/page.tsx.
+// DATA FLOW: CashierCheckoutPayload → processCheckout → 6 localStorage writes
+//            → returns success boolean → cashier/page.tsx shows CashierReceiptModal
 
 import { useState, useCallback } from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { STORAGE_KEYS } from "@/lib/localStorageSeeder";
 import { formatCurrency, formatDateTime } from "@/lib/formatters";
 import { dispatchNotification } from "@/lib/notificationService";
-import { createServiceRequest } from "@/lib/serviceRequestService";
+import { createServiceRequest } from "../cashier_utils/cashier_serviceRequestService";
 import type {
   AppOrder,
   AppTable,
@@ -31,7 +31,7 @@ import type {
   UseCashierCheckoutReturn,
 } from "@/app/cashier/cashier_types/CashierTypes";
 
-// â”€â”€â”€ Constants (Rule 35: No magic strings / numbers) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Constants (Rule 35: No magic strings / numbers) ─────────────────────────
 
 const STATUS_COMPLETED  = "COMPLETED"  as const;
 const STATUS_AVAILABLE  = "AVAILABLE"  as const;
@@ -40,9 +40,9 @@ const ROLE_CASHIER      = "CASHIER"    as const;
 const CASHIER_ID        = "staff-01"   as const; // placeholder until auth module
 const WHATSAPP_BASE_URL = "https://wa.me/" as const;
 const RESTAURANT_NAME   = "Spice Garden Restaurant" as const;
-const RECEIPT_DIVIDER   = "â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€" as const;
+const RECEIPT_DIVIDER   = "─────────────────────────" as const;
 
-// â”€â”€â”€ Pure Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Pure Helpers ─────────────────────────────────────────────────────────────
 
 /**
  * Builds a pre-filled WhatsApp wa.me link with the receipt text as message.
@@ -73,7 +73,7 @@ export function buildReceiptText(
 ): string {
   const now   = formatDateTime(Date.now());
   const lines: string[] = [
-    `ðŸ½ï¸ ${RESTAURANT_NAME}`,
+    `🍽️ ${RESTAURANT_NAME}`,
     `Table: ${tableNumber}  |  ${now}`,
     RECEIPT_DIVIDER,
   ];
@@ -111,9 +111,9 @@ export function buildReceiptText(
   lines.push(RECEIPT_DIVIDER);
   lines.push(`*TOTAL  ${formatCurrency(taxBreakdown.totalAmount)}*`);
   lines.push(RECEIPT_DIVIDER);
-  lines.push("Thank you for dining with us! ðŸ™");
+  lines.push("Thank you for dining with us! 🙏");
 
-  return lines.join("\n");
+  return lines.join("/n");
 }
 
 /**
@@ -128,17 +128,17 @@ function resolvePaymentMethod(
   return "SPLIT";
 }
 
-// â”€â”€â”€ Hook â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Hook ─────────────────────────────────────────────────────────────────────
 
 /**
  * Orchestrates the full checkout flow for the Cashier POS.
- * processCheckout runs 6 sequential localStorage writes (pessimistic â€” all or nothing per step).
+ * processCheckout runs 6 sequential localStorage writes (pessimistic — all or nothing per step).
  * buildWhatsAppLink and buildReceiptText are exposed for CashierReceiptModal.
  *
  * @returns isProcessing, processCheckout, buildWhatsAppLink, buildReceiptText
  */
 export function useCashierCheckout(): UseCashierCheckoutReturn {
-  // Rule 61: No direct localStorage â€” hooks only
+  // Rule 61: No direct localStorage — hooks only
   const [salesHistory, setSalesHistory] = useLocalStorage<AppSalesRecord[]>  (STORAGE_KEYS.SALES_HISTORY,  []);
   const [crmCustomers, setCrmCustomers] = useLocalStorage<AppCrmCustomer[]>  (STORAGE_KEYS.CRM_CUSTOMERS,  []);
   const [orders,       setOrders]       = useLocalStorage<AppOrder[]>        (STORAGE_KEYS.ORDERS,         []);
@@ -152,13 +152,13 @@ export function useCashierCheckout(): UseCashierCheckoutReturn {
   /**
    * Runs the full 6-step checkout sequence.
    * Returns true on success, false if any critical step fails.
-   * Rule 15: Pessimistic UI â€” isProcessing blocks re-submission.
+   * Rule 15: Pessimistic UI — isProcessing blocks re-submission.
    */
   const processCheckout = useCallback(
     async (payload: CashierCheckoutPayload): Promise<boolean> => {
       if (isProcessing) return false;
       if (!payload.orderId || !payload.tableNumber) {
-        console.warn("[useCashierCheckout] orderId or tableNumber missing â€” aborting checkout");
+        console.warn("[useCashierCheckout] orderId or tableNumber missing — aborting checkout");
         return false;
       }
       setIsProcessing(true);
@@ -166,7 +166,7 @@ export function useCashierCheckout(): UseCashierCheckoutReturn {
       const saleId    = `sale-${Date.now()}`;
       const timestamp = Date.now();
 
-      // â”€â”€ Step 1: Recipe-based inventory deduction â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      // ── Step 1: Recipe-based inventory deduction ──────────────────────────
       setInventory((prevInventory) => {
         let newInventory = [...prevInventory];
         
@@ -187,7 +187,7 @@ export function useCashierCheckout(): UseCashierCheckoutReturn {
         return newInventory;
       });
 
-      // â”€â”€ Step 2: Save AppSalesRecord to app_sales_history â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      // ── Step 2: Save AppSalesRecord to app_sales_history ─────────────────
       const paymentMethod = resolvePaymentMethod(payload.paymentMode, payload.singleMethod);
       const splitDetails  =
         paymentMethod === "SPLIT"
@@ -215,7 +215,7 @@ export function useCashierCheckout(): UseCashierCheckoutReturn {
 
       setSalesHistory((prev) => [...prev, salesRecord]);
 
-      // â”€â”€ Step 3: Update CRM customer loyalty points â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      // ── Step 3: Update CRM customer loyalty points ────────────────────────
       // loyaltyEarned added, totalVisits++, saleId pushed to history.
       // Auto-creates new customer record if phone is provided but not in CRM yet.
       if (payload.customerPhone && payload.customerPhone.length >= 10) {
@@ -243,14 +243,14 @@ export function useCashierCheckout(): UseCashierCheckoutReturn {
         });
       }
 
-      // â”€â”€ Step 4: Mark order status = COMPLETED â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      // ── Step 4: Mark order status = COMPLETED ────────────────────────────
       setOrders((prev) =>
         prev.map((o) =>
           o.id === payload.orderId ? { ...o, status: STATUS_COMPLETED } : o
         )
       );
 
-      // â”€â”€ Step 5: Update table status = CLEANING, currentOrderId = null â”€â”€â”€â”€
+      // ── Step 5: Update table status = CLEANING, currentOrderId = null ────
       const normKey = (s?: string) => (s || "").toLowerCase().trim().replace(/^(table|tbl|t)-?/i, "").trim().padStart(2, "0");
       const targetTableKey = normKey(payload.tableNumber);
 
@@ -267,7 +267,7 @@ export function useCashierCheckout(): UseCashierCheckoutReturn {
         window.localStorage.removeItem(`table_phone_${targetTableKey}`);
       }
 
-      // â”€â”€ Step 6: Write audit log entry â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      // ── Step 6: Write audit log entry ─────────────────────────────────────
       const auditEntry: AppAuditLog = {
         id:        `log-${timestamp}`,
         action:    ACTION_CHECKOUT,
@@ -278,11 +278,11 @@ export function useCashierCheckout(): UseCashierCheckoutReturn {
 
       setAuditLogs((prev) => [...prev, auditEntry]);
 
-      // â”€â”€ Step 7: Dispatch CLEANING notification & Service Request to Waiters ðŸ§¹
+      // ── Step 7: Dispatch CLEANING notification & Service Request to Waiters 🧹
       dispatchNotification({
         role: "WAITER",
         type: "SERVICE_REQUEST",
-        title: `Clean Table ${payload.tableNumber} ðŸ§¹`,
+        title: `Clean Table ${payload.tableNumber} 🧹`,
         message: `Bill paid for Table ${payload.tableNumber}. Please clean table & reset for next guests!`,
         entityId: payload.tableNumber,
         entityType: "TABLE",

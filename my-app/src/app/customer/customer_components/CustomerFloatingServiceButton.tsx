@@ -5,7 +5,7 @@
 // DATA FLOW: Customer action -> createServiceRequest() -> app_service_requests -> Waiter notification
 
 import React, { useState } from "react";
-import { createServiceRequest } from "@/lib/serviceRequestService";
+import { createServiceRequest } from "../customer_utils/customer_serviceRequestService";
 import { showToast } from "@/lib/toastService";
 import type { ServiceRequestType } from "@/types/appTypes";
 import { Bell, Droplets, Receipt, Sparkles, Utensils, X, CheckCircle2 } from "lucide-react";

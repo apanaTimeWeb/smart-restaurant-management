@@ -26,7 +26,7 @@ import {
 } from "lucide-react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { STORAGE_KEYS } from "@/lib/localStorageSeeder";
-import { createServiceRequest } from "@/lib/serviceRequestService";
+import { createServiceRequest } from "../customer_utils/customer_serviceRequestService";
 import { showToast } from "@/lib/toastService";
 import { formatCurrency } from "@/lib/formatters";
 import { CustomerBillRequestModal } from "./CustomerBillRequestModal";
