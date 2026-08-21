@@ -23,4 +23,6 @@ export const SUPER_ADMIN_ROUTES = {
   SECURITY: "/super-admin/security",
   COMMUNICATIONS: "/super-admin/communications",
   BRANDING: "/super-admin/branding",
+  ROLES: "/super-admin/roles",
+  API: "/super-admin/api",
 } as const;
