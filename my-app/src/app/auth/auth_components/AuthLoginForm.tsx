@@ -138,8 +138,8 @@ export function AuthLoginForm({ onSuccessRedirect }: AuthLoginFormProps): React.
         <div className="flex flex-wrap items-center justify-center gap-2">
           {[
             { role: "Super Admin", user: "superadmin", pass: "superadmin123", color: "bg-purple-500/10 text-purple-600 border-purple-500/20 hover:bg-purple-500 hover:text-white" },
-            { role: "Manager", user: "owner", pass: "owner123", color: "bg-emerald-500/10 text-emerald-600 border-emerald-500/20 hover:bg-emerald-500 hover:text-white" },
             { role: "Admin", user: "admin", pass: "admin123", color: "bg-blue-500/10 text-blue-600 border-blue-500/20 hover:bg-blue-500 hover:text-white" },
+            { role: "Manager", user: "owner", pass: "owner123", color: "bg-emerald-500/10 text-emerald-600 border-emerald-500/20 hover:bg-emerald-500 hover:text-white" },
             { role: "Cashier", user: "cashier", pass: "cashier123", color: "bg-amber-500/10 text-amber-600 border-amber-500/20 hover:bg-amber-500 hover:text-white" },
             { role: "Waiter", user: "waiter", pass: "waiter123", color: "bg-pink-500/10 text-pink-600 border-pink-500/20 hover:bg-pink-500 hover:text-white" },
             { role: "Kitchen", user: "kitchen", pass: "kitchen123", color: "bg-orange-500/10 text-orange-600 border-orange-500/20 hover:bg-orange-500 hover:text-white" },
