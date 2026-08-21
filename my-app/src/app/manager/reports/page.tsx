@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 // RESPONSIBILITY: OwnerReports & Analytics page shell.
 // Composes OwnerReportsSummaryCards + OwnerReportsRevenueChart + OwnerReportsTopItemsTable.
@@ -66,7 +66,7 @@ export default function OwnerReportsPage() {
 
   // â”€â”€ Full render â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   return (
-    <AuthGuard allowedRoles={["ADMIN", "CASHIER", "MANAGER"]}>
+    <AuthGuard allowedRoles={["MANAGER"]}>
       <div className="flex flex-col gap-6">
         <OwnerReportsPageHeader
           period={period}

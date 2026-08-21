@@ -160,7 +160,7 @@ export default function OwnerShiftPage() {
   }
 
   return (
-    <AuthGuard allowedRoles={["ADMIN", "CASHIER", "MANAGER"]}>
+    <AuthGuard allowedRoles={["MANAGER"]}>
       <div className="flex flex-col gap-6">
         <ShiftPageHeader />
 

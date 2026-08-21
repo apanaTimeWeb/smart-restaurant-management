@@ -422,6 +422,23 @@ export function initializeLocalStorageSeeds(): void {
         window.localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(currentUser));
       }
     }
+    
+    // MIGRATION: Fix ownerId in existing SAAS_TENANTS
+    const rawTenants = window.localStorage.getItem(STORAGE_KEYS.SAAS_TENANTS);
+    if (rawTenants) {
+      let tenants = JSON.parse(rawTenants);
+      let tenantsUpdated = false;
+      tenants = tenants.map((t: any) => {
+        if (t.ownerId === "usr_owner_01") { tenantsUpdated = true; return { ...t, ownerId: "usr-owner-01" }; }
+        if (t.ownerId === "usr_owner_02") { tenantsUpdated = true; return { ...t, ownerId: "usr-owner-02" }; }
+        if (t.ownerId === "usr_owner_03") { tenantsUpdated = true; return { ...t, ownerId: "usr-owner-03" }; }
+        if (t.ownerId === "usr_owner_04") { tenantsUpdated = true; return { ...t, ownerId: "usr-owner-04" }; }
+        return t;
+      });
+      if (tenantsUpdated) {
+        window.localStorage.setItem(STORAGE_KEYS.SAAS_TENANTS, JSON.stringify(tenants));
+      }
+    }
   } catch (e) {
     console.error("Migration failed:", e);
   }

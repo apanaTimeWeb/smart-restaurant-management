@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 // RESPONSIBILITY: OwnerReservations page shell.
 // Composes OwnerReservationsTable + OwnerReservationsFormModal.
@@ -77,7 +77,7 @@ export default function OwnerReservationsPage() {
 
   // ── Full render ────────────────────────────────────────────────────────────
   return (
-    <AuthGuard allowedRoles={["ADMIN", "WAITER", "CUSTOMER"]}>
+    <AuthGuard allowedRoles={["MANAGER"]}>
       <div className="flex flex-col gap-6">
         <OwnerReservationsPageHeader
           activeTab={activeTab}
