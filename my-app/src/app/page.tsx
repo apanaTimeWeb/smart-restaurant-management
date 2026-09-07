@@ -1,9 +1,9 @@
-﻿"use client";
+"use client";
 
 // RESPONSIBILITY: Public City Marketplace & Multi-Tenant SaaS Landing Portal (`/`).
 // Allows customers to browse, search, and discover top restaurants by city & cuisine,
 // scan walk-in QR menus, or book advance tables with zero-wait pre-ordering.
-// Provides Hotel Owners direct CTA to register and onboard their restaurant.
+// Provides Managers direct CTA to register and onboard their restaurant.
 // DATA FLOW: tenantService -> localStorage (SAAS_TENANTS) -> City Marketplace -> UI
 
 import React, { useState, useEffect, useMemo } from "react";
@@ -323,7 +323,7 @@ export default function SaaSMarketplaceLandingPage(): React.JSX.Element {
 
             <div className="shrink-0 flex flex-col gap-3 w-full sm:w-auto">
               <Link
-                href="/owner/register"
+                href="/manager/register"
                 className="flex items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-4 font-black text-sm text-white shadow-xl hover:bg-primary/90 active:scale-95 transition-all"
               >
                 <span>Register Your Restaurant</span>

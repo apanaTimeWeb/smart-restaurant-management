@@ -66,7 +66,7 @@ export default function CashierReportsPage() {
 
   // â”€â”€ Full render â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   return (
-    <AuthGuard allowedRoles={["ADMIN", "CASHIER", "HOTEL_OWNER"]}>
+    <AuthGuard allowedRoles={["ADMIN", "CASHIER", "MANAGER"]}>
       <div className="flex flex-col gap-6">
         <CashierReportsPageHeader
           period={period}

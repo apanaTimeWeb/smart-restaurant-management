@@ -26,7 +26,7 @@ export default function PaymentsPage() {
   const handleVerify = (tenant: AppTenant) => {
     updateTenantStatus(tenant.tenantId, "ACTIVE");
     dispatchNotification({
-      role: "HOTEL_OWNER",
+      role: "MANAGER",
       type: "PAYMENT_VERIFIED", 
       title: "Payment Verified! 🎉",
       message: `Your hotel request and payment success. Now fill the list hotel form and list your hotel.`,

@@ -24,11 +24,11 @@ export default function RequestsPage() {
   const handleApprove = (tenant: AppTenant) => {
     updateTenantStatus(tenant.tenantId, "PAYMENT_PENDING");
     dispatchNotification({
-      role: "HOTEL_OWNER",
+      role: "MANAGER",
       type: "HOTEL_REGISTRATION_NEW", // Using generic type for now
       title: "Hotel Approved! 🎉",
       message: `Your hotel "${tenant.restaurantName}" is approved. Please proceed to payment.`,
-      route: "/owner/dashboard",
+      route: "/manager/dashboard",
       playSound: true,
       soundType: "READY",
     });

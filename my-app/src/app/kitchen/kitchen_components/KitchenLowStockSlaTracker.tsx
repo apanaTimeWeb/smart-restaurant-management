@@ -31,7 +31,7 @@ export function KitchenLowStockSlaTracker(): React.JSX.Element | null {
   if (activeAlerts.length === 0) return null;
 
   const { currentUser } = useAuth();
-  const canSend = currentUser?.role === "HOTEL_OWNER" || currentUser?.role === "SUPER_ADMIN";
+  const canSend = currentUser?.role === "MANAGER" || currentUser?.role === "SUPER_ADMIN";
 
   const handleSendStrictReminder = (alert: AppLowStockAlert) => {
     const cashierNotif: AppNotification = {
